@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="mainAnchorPane" prefHeight="764.0" prefWidth="1309.0" stylesheets="@../style/dashboard_form_style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controller.MainDashboardFormController">
+    <children>
+        <AnchorPane fx:id="mainButtonPane" layoutY="-1.0" prefHeight="771.0" prefWidth="291.0">
+            <children>
+                <Button layoutX="69.0" layoutY="250.0" mnemonicParsing="false" onAction="#btnManageMembersOnAction" prefHeight="46.0" prefWidth="222.0" styleClass="side-corner-round-button-black" text="Manage Members" />
+                <Button layoutX="69.0" layoutY="320.0" mnemonicParsing="false" onAction="#btnManageBooksOnAction" prefHeight="46.0" prefWidth="222.0" styleClass="side-corner-round-button-black" text="Manage Books" />
+                <Button layoutX="69.0" layoutY="394.0" mnemonicParsing="false" onAction="#btnManageAuthorsAndPublishersOnAction" prefHeight="46.0" prefWidth="222.0" styleClass="side-corner-round-button-black" text="Manage Authors And Publishers" />
+                <Button layoutX="69.0" layoutY="466.0" mnemonicParsing="false" onAction="#btnBorrowBookRecordsOnAction" prefHeight="46.0" prefWidth="222.0" styleClass="side-corner-round-button-black" text="Borrow Book Record" />
+                <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="71.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../assets/img/boy%201.png" />
+                    </image>
+                </ImageView>
+                <Button layoutX="69.0" layoutY="536.0" mnemonicParsing="false" onAction="#btnReturnBookRecordOnAction" prefHeight="46.0" prefWidth="222.0" styleClass="side-corner-round-button-black" text="Return Book Record" />
+            </children>
+        </AnchorPane>
+        <AnchorPane fx:id="mainPane" layoutX="306.0" layoutY="33.0" prefHeight="717.0" prefWidth="990.0">
+            <children>
+                <AnchorPane layoutX="73.0" layoutY="31.0" prefHeight="206.0" prefWidth="823.0" styleClass="sub_panes">
+                    <children>
+                        <ImageView fitHeight="179.0" fitWidth="262.0" layoutX="30.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../assets/img/undraw_bookshelves_re_lxoy%201.png" />
+                            </image>
+                        </ImageView>
+                        <Label layoutX="337.0" layoutY="28.0" prefHeight="46.0" prefWidth="402.0" text="Manage Your All Book">
+                            <font>
+                                <Font name="Britannic Bold" size="36.0" />
+                            </font>
+                        </Label>
+                        <Button layoutX="427.0" layoutY="113.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="222.0" styleClass="round-button-black" text="Manage Books" />
+                    </children>
+                </AnchorPane>
+                <AnchorPane layoutX="73.0" layoutY="260.0" prefHeight="206.0" prefWidth="823.0" styleClass="sub_panes" />
+                <AnchorPane layoutX="72.0" layoutY="497.0" prefHeight="206.0" prefWidth="823.0" styleClass="sub_panes" />
+            </children>
+        </AnchorPane>
+    </children>
+</AnchorPane>
