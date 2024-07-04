@@ -4,7 +4,9 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
+import org.example.dto.MemberDTO;
 
 import java.io.IOException;
 
@@ -16,10 +18,15 @@ public class AppInitializer extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) throws IOException {
-        Parent load = FXMLLoader.load(getClass().getResource("/view/login_form.fxml"));  //Load the login_form.fxml file
-        Scene scene = new Scene(load);
-        primaryStage.setScene(scene);
-        primaryStage.show();
+    public void start(Stage primaryStage) {
+        try {
+            Parent load = FXMLLoader.load(getClass().getResource("/view/login_form.fxml"));
+            Scene scene = new Scene(load);
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (IOException e) {
+            new Alert(Alert.AlertType.ERROR,"Failed to load the form - Contact Developer").show();
+            e.printStackTrace();
+        }
     }
 }

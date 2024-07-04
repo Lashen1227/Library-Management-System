@@ -5,7 +5,12 @@
     -fx-background-color: #ffffff;
     -fx-background-radius: 20px 0 0 20px;
     -fx-border-radius: 20px 0 0 20px;
-
+}
+.side-corner-round-button-black:hover{
+    -fx-effect: dropshadow(three-pass-box, rgba(146, 255, 239, 0.8), 10, 0.8, -4, 0);
+}
+.side-corner-round-button-black:pressed{
+    -fx-effect: dropshadow(three-pass-box, rgba(41, 102, 241, 0.8), 10, 0.8, -4, 0);
 }
 .sub_panes{
     -fx-background-color: #D9D9D9;
