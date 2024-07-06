@@ -20,10 +20,24 @@
     -fx-text-fill: white;
     -fx-font-style: bold;
     -fx-font-weight: 5px;
+    -fx-cursor: hand;
 }
 .round-button-black:hover{
     -fx-effect: dropshadow(three-pass-box, rgba(156, 231, 212, 0.8), 10, 0.8, 0, 0);
 }
 .round-button-black:pressed{
     -fx-effect: dropshadow(three-pass-box, rgba(29, 181, 249, 0.8), 10, 0.8, 0, 0);
+}
+
+.login-page-welcome-heading {
+    -fx-font-weight: bold;
+    -fx-font-family: "times new roman", Times, serif;;
+}
+
+.login-page-heading {
+    -fx-font-family: "times new roman", Times, serif;;
+}
+
+.view-hide-button {
+    -fx-cursor: hand;
 }

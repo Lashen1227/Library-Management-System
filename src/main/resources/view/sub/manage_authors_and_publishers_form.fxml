@@ -9,8 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="717.0" prefWidth="990.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controller.sub.ManageAuthorsAndPublishersController">
+<AnchorPane prefHeight="717.0" prefWidth="990.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controller.sub.ManageAuthorsAndPublishersController">
     <children>
         <AnchorPane layoutX="31.0" layoutY="22.0" prefHeight="671.0" prefWidth="385.0">
             <children>
@@ -19,7 +18,7 @@
                         <Font name="System Bold" size="21.0" />
                     </font>
                 </Label>
-                <TextField fx:id="txtPublisherId" layoutX="27.0" layoutY="82.0" prefHeight="25.0" prefWidth="315.0" promptText="Publisher Id" />
+                <TextField fx:id="txtPublisherId" layoutX="27.0" layoutY="82.0" prefHeight="25.0" prefWidth="315.0" promptText="Publisher ID" />
                 <TextField fx:id="txtPublisherName" layoutX="27.0" layoutY="115.0" prefHeight="25.0" prefWidth="315.0" promptText="Publisher Name" />
                 <TextField fx:id="txtPublisherLocation" layoutX="27.0" layoutY="154.0" prefHeight="25.0" prefWidth="315.0" promptText="Publisher Location" />
                 <TextField fx:id="txtPublisherContact" layoutX="27.0" layoutY="192.0" prefHeight="25.0" prefWidth="315.0" promptText="Publisher Contact" />
@@ -29,7 +28,7 @@
                 <Button layoutX="274.0" layoutY="250.0" mnemonicParsing="false" onAction="#btnClearPublisherOnAction" text="Clear" />
                 <TableView fx:id="tblPublishers" layoutX="10.0" layoutY="319.0" prefHeight="331.0" prefWidth="360.0">
                     <columns>
-                        <TableColumn fx:id="colPublisherId" prefWidth="61.0" text="Id" />
+                        <TableColumn fx:id="colPublisherId" prefWidth="61.0" text="ID" />
                         <TableColumn fx:id="colPublisherName" prefWidth="162.0" text="Name" />
                         <TableColumn fx:id="colPublisherContact" prefWidth="136.0" text="Contact" />
                     </columns>
@@ -43,16 +42,16 @@
                         <Font name="System Bold" size="21.0" />
                     </font>
                 </Label>
-                <TextField fx:id="txtAuthorId" layoutX="35.0" layoutY="67.0" prefHeight="25.0" prefWidth="315.0" promptText="Author ID" />
-                <TextField fx:id="txtAuthorName" layoutX="35.0" layoutY="100.0" prefHeight="25.0" prefWidth="315.0" promptText="Author Name" />
-                <TextField fx:id="txtAuthorContact" layoutX="35.0" layoutY="139.0" prefHeight="25.0" prefWidth="315.0" promptText="Author Contact" />
+                <TextField fx:id="txtAuthorId" layoutX="35.0" layoutY="85.0" prefHeight="25.0" prefWidth="315.0" promptText="Author ID" />
+                <TextField fx:id="txtAuthorName" layoutX="35.0" layoutY="118.0" prefHeight="25.0" prefWidth="315.0" promptText="Author Name" />
+                <TextField fx:id="txtAuthorContact" layoutX="35.0" layoutY="157.0" prefHeight="25.0" prefWidth="315.0" promptText="Author Contact" />
                 <Button layoutX="55.0" layoutY="250.0" mnemonicParsing="false" onAction="#btnSaveAuthorOnAction" text="Save" />
                 <Button layoutX="124.0" layoutY="250.0" mnemonicParsing="false" onAction="#btnUpdateAuthorOnAction" text="Update" />
                 <Button layoutX="206.0" layoutY="250.0" mnemonicParsing="false" onAction="#btnDeleteAuthorOnAction" text="Delete" />
                 <Button layoutX="287.0" layoutY="250.0" mnemonicParsing="false" onAction="#btnClearAuthorOnAction" text="Clear" />
-                <TableView fx:id="tblAuthors" layoutX="17.0" layoutY="314.0" prefHeight="331.0" prefWidth="360.0">
+                <TableView fx:id="tblAuthors" layoutX="17.0" layoutY="319.0" prefHeight="331.0" prefWidth="360.0">
                     <columns>
-                        <TableColumn fx:id="colAuthorId" prefWidth="61.0" text="Id" />
+                        <TableColumn fx:id="colAuthorId" prefWidth="61.0" text="ID" />
                         <TableColumn fx:id="colAuthorName" prefWidth="162.0" text="Name" />
                         <TableColumn fx:id="colAuthorContact" prefWidth="136.0" text="Contact" />
                     </columns>

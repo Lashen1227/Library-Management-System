@@ -17,7 +17,7 @@
                 <Button layoutX="69.0" layoutY="466.0" mnemonicParsing="false" onAction="#btnBorrowBookRecordsOnAction" prefHeight="46.0" prefWidth="222.0" styleClass="side-corner-round-button-black" text="Borrow Book Record" />
                 <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="71.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../assets/img/boy%201.png" />
+                        <Image url="@../assets/img/boy 1.png" />
                     </image>
                 </ImageView>
                 <Button layoutX="69.0" layoutY="536.0" mnemonicParsing="false" onAction="#btnReturnBookRecordOnAction" prefHeight="46.0" prefWidth="222.0" styleClass="side-corner-round-button-black" text="Return Book Record" />
@@ -25,14 +25,14 @@
         </AnchorPane>
         <AnchorPane fx:id="mainPane" layoutX="306.0" layoutY="33.0" prefHeight="717.0" prefWidth="990.0">
             <children>
-                <AnchorPane layoutX="73.0" layoutY="31.0" prefHeight="206.0" prefWidth="823.0" styleClass="sub_panes">
+                <AnchorPane layoutX="73.0" layoutY="25.0" prefHeight="206.0" prefWidth="823.0" styleClass="sub_panes">
                     <children>
                         <ImageView fitHeight="179.0" fitWidth="262.0" layoutX="30.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../assets/img/undraw_bookshelves_re_lxoy%201.png" />
+                                <Image url="@../assets/img/undraw_bookshelves_re_lxoy 1.png" />
                             </image>
                         </ImageView>
-                        <Label layoutX="337.0" layoutY="28.0" prefHeight="46.0" prefWidth="402.0" text="Manage Your All Book">
+                        <Label layoutX="335.0" layoutY="33.0" prefHeight="52.0" prefWidth="456.0" styleClass="dashboard-page-heading" text="Manage your all books">
                             <font>
                                 <Font name="Britannic Bold" size="36.0" />
                             </font>
@@ -40,8 +40,41 @@
                         <Button layoutX="427.0" layoutY="113.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="222.0" styleClass="round-button-black" text="Manage Books" />
                     </children>
                 </AnchorPane>
-                <AnchorPane layoutX="73.0" layoutY="260.0" prefHeight="206.0" prefWidth="823.0" styleClass="sub_panes" />
-                <AnchorPane layoutX="72.0" layoutY="497.0" prefHeight="206.0" prefWidth="823.0" styleClass="sub_panes" />
+            <AnchorPane layoutX="75.0" layoutY="265.0" prefHeight="206.0" prefWidth="823.0" styleClass="sub_panes">
+               <children>
+                  <ImageView fitHeight="179.0" fitWidth="262.0" layoutX="548.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../assets/img/undraw_save_to_bookmarks_re_8ajf 1.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="34.0" layoutY="39.0" prefHeight="46.0" prefWidth="402.0" styleClass="dashboard-page-heading" text="Add a book to your">
+                     <font>
+                        <Font name="Britannic Bold" size="36.0" />
+                     </font>
+                  </Label>
+                  <Button layoutX="266.0" layoutY="128.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="222.0" styleClass="round-button-black" text="Book Records" />
+                  <Label layoutX="31.0" layoutY="96.0" prefHeight="46.0" prefWidth="402.0" styleClass="dashboard-page-heading" text="Collection">
+                     <font>
+                        <Font name="Britannic Bold" size="36.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="74.0" layoutY="504.0" prefHeight="206.0" prefWidth="823.0" styleClass="sub_panes">
+               <children>
+                  <ImageView fitHeight="179.0" fitWidth="262.0" layoutX="29.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../assets/img/undraw_writer_q06d 1.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="277.0" layoutY="40.0" prefHeight="52.0" prefWidth="531.0" styleClass="dashboard-page-heading" text="Find your favourite author">
+                     <font>
+                        <Font name="Britannic Bold" size="36.0" />
+                     </font>
+                  </Label>
+                  <Button layoutX="427.0" layoutY="113.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="222.0" styleClass="round-button-black" text="Manage Authors And Publishers" />
+               </children>
+            </AnchorPane>
             </children>
         </AnchorPane>
     </children>

@@ -7,8 +7,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane prefHeight="717.0" prefWidth="990.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controller.sub.ManageMemberFormController">
+<AnchorPane prefHeight="717.0" prefWidth="990.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controller.sub.ManageMemberFormController">
     <children>
         <TextField fx:id="txtMemberId" layoutX="45.0" layoutY="89.0" onAction="#txtMemberIdOnAction" prefHeight="25.0" prefWidth="234.0" promptText="Member ID" />
         <TextField fx:id="txtMemberName" layoutX="45.0" layoutY="156.0" prefHeight="25.0" prefWidth="234.0" promptText="Member Name" />
@@ -19,14 +18,14 @@
         <Button layoutX="171.0" layoutY="499.0" mnemonicParsing="false" onAction="#btnUpdateOnAction" text="Update Customer" />
         <Button layoutX="43.0" layoutY="550.0" mnemonicParsing="false" onAction="#btnDeleteOnAction" prefHeight="25.0" prefWidth="110.0" text="Delete Customer" />
         <Button layoutX="171.0" layoutY="550.0" mnemonicParsing="false" onAction="#btnClearOnAction" prefHeight="25.0" prefWidth="110.0" text="Clear" />
-        <Label layoutX="45.0" layoutY="72.0" text="Member Id" />
+        <Label layoutX="45.0" layoutY="72.0" text="Member ID" />
         <Label layoutX="45.0" layoutY="139.0" text="Member Name" />
         <Label layoutX="45.0" layoutY="202.0" text="Member Address" />
         <Label layoutX="45.0" layoutY="257.0" text="Member Email" />
-        <Label layoutX="47.0" layoutY="317.0" text="MemberContact" />
-        <TableView fx:id="tblMember" layoutX="315.0" layoutY="81.0" prefHeight="559.0" prefWidth="643.0">
+        <Label layoutX="47.0" layoutY="317.0" text="Member Contact" />
+        <TableView fx:id="tblMember" layoutX="315.0" layoutY="83.0" prefHeight="559.0" prefWidth="643.0">
             <columns>
-                <TableColumn fx:id="colMemberId" prefWidth="132.0" text="Member Id" />
+                <TableColumn fx:id="colMemberId" prefWidth="132.0" text="Member ID" />
                 <TableColumn fx:id="colMemberName" prefWidth="133.0" text="Member Name" />
                 <TableColumn fx:id="colMemberAddress" prefWidth="133.0" text="Member Address" />
                 <TableColumn fx:id="colMemberEmail" prefWidth="133.0" text="Member Email" />

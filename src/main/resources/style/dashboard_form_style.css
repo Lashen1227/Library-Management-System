@@ -5,6 +5,7 @@
     -fx-background-color: #ffffff;
     -fx-background-radius: 20px 0 0 20px;
     -fx-border-radius: 20px 0 0 20px;
+    -fx-cursor: hand;
 }
 .side-corner-round-button-black:hover{
     -fx-effect: dropshadow(three-pass-box, rgba(146, 255, 239, 0.8), 10, 0.8, -4, 0);
@@ -33,4 +34,11 @@
 }
 .round-button-black:pressed{
     -fx-effect: dropshadow(three-pass-box, rgba(29, 181, 249, 0.8), 10, 0.8, 0, 0);
+}
+
+.dashboard-page-heading {
+    -fx-font-size: 36px;
+    -fx-font-family:  "Georgia", serif;
+    -fx-font-weight: bold;
+    -fx-text-fill: #3B3939;
 }
