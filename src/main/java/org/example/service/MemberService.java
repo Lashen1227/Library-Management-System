@@ -1,6 +1,5 @@
 package org.example.service;
 
-import javafx.scene.control.Alert;
 import org.example.dto.MemberDTO;
 import org.example.entity.Member;
 import org.example.repo.MemberRepo;
@@ -8,12 +7,14 @@ import org.example.util.exceptions.MemberException;
 
 import java.sql.SQLException;
 import java.util.Optional;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MemberService {
     private final MemberRepo memberRepo = new MemberRepo();
 
     public boolean addMember(MemberDTO member) throws MemberException {
-        Member entity = this.covnertDTOtoEntity(member);
+        Member entity = this.covnvertDTOtoEntity(member);
         try {
             boolean isSaved = memberRepo.save(entity);
             return isSaved;
@@ -34,7 +35,6 @@ public class MemberService {
         }
     }
 
-
     public boolean delete(String id) throws MemberException{
         try {
             boolean delete = memberRepo.delete(id);
@@ -46,7 +46,7 @@ public class MemberService {
     }
 
     public boolean update(MemberDTO member) throws MemberException {
-        Member entity = covnertDTOtoEntity(member);
+        Member entity = covnvertDTOtoEntity(member);
         try {
             boolean isUpdated = memberRepo.update(entity);
             return isUpdated;
@@ -64,9 +64,9 @@ public class MemberService {
 
     public Optional<MemberDTO> search(String id){
         try {
-            Optional<Member> member = memberRepo.searchCustomer(id);
+            Optional<Member> member = memberRepo.search(id);
             if (member.isPresent()){
-                MemberDTO memberDTO = covnertEntityToDTO(member.get());
+                MemberDTO memberDTO = convnertEntityToDTO(member.get());
                 return Optional.of(memberDTO);
             }
         } catch (SQLException | ClassNotFoundException e) {
@@ -75,9 +75,24 @@ public class MemberService {
         return Optional.empty();
     }
 
+    public List<MemberDTO> getAll() throws MemberException {
+        try {
+            List<Member> all = memberRepo.getAll();
+            if (all.isEmpty()){
+                throw new MemberException("No Members Found");
+            }
+            List<MemberDTO> memberDTOS = new ArrayList<>();
+            for (Member member : all) {
+                MemberDTO memberDTO = convnertEntityToDTO(member);
+                memberDTOS.add(memberDTO);
+            }
+            return memberDTOS;
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new MemberException("Contact Developer",e);
+        }
+    }
 
-
-    private Member covnertDTOtoEntity(MemberDTO memberDTO){
+    private Member covnvertDTOtoEntity(MemberDTO memberDTO){
         Member member = new Member();
         member.setId(memberDTO.getId());
         member.setName(memberDTO.getName());
@@ -87,7 +102,7 @@ public class MemberService {
         return member;
     }
 
-    private MemberDTO covnertEntityToDTO(Member memberEntity){
+    private MemberDTO convnertEntityToDTO(Member memberEntity){
         MemberDTO memberDTO = new MemberDTO();
         memberDTO.setId(memberEntity.getId());
         memberDTO.setName(memberEntity.getName());

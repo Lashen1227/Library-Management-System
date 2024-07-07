@@ -8,6 +8,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MemberRepo {
 
@@ -42,7 +44,7 @@ public class MemberRepo {
         return ps.executeUpdate()>0;
     }
 
-    public Optional<Member> searchCustomer(String customerId) throws SQLException, ClassNotFoundException {
+    public Optional<Member> search(String customerId) throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.getInstance().getConnection();
         PreparedStatement ps = connection.prepareStatement("SELECT * FROM member WHERE id = ?");
         ps.setString(1,customerId);
@@ -59,5 +61,20 @@ public class MemberRepo {
         return Optional.empty();
     }
 
-
+    public List<Member> getAll() throws SQLException, ClassNotFoundException {
+        Connection connection = DBConnection.getInstance().getConnection();
+        PreparedStatement ps = connection.prepareStatement("SELECT * FROM member");
+        ResultSet rs = ps.executeQuery();
+        List<Member> list = new ArrayList<>();
+        while(rs.next()){
+            String id = rs.getString(1);
+            String name = rs.getString(2);
+            String address = rs.getString(3);
+            String email = rs.getString(4);
+            String contact = rs.getString(5);
+            Member member = new Member(id,name,address,email,contact);
+            list.add(member);
+        }
+        return list;
+    }
 }

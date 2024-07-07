@@ -1,11 +1,17 @@
 package org.example.controller.sub;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import org.example.dto.MemberDTO;
 import org.example.service.MemberService;
+import org.example.tableModels.MemberTM;
 import org.example.util.exceptions.MemberException;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class ManageMemberFormController {
@@ -14,14 +20,28 @@ public class ManageMemberFormController {
     public TextField txtMemberAddress;
     public TextField txtMemberEmail;
     public TextField txtMemberContact;
-    public TableView tblMember;
-    public TableColumn colMemberId;
-    public TableColumn colMemberName;
-    public TableColumn colMemberAddress;
-    public TableColumn colMemberEmail;
-    public TableColumn colMemberContact;
+    public TableView<MemberTM> tblMember;
+    public TableColumn<MemberTM,String> colMemberId;
+    public TableColumn<MemberTM,String> colMemberName;
+    public TableColumn<MemberTM,String> colMemberAddress;
+    public TableColumn<MemberTM,String> colMemberEmail;
+    public TableColumn<MemberTM,String> colMemberContact;
 
     private final MemberService service = new MemberService();
+
+    public void initialize(){
+        loadTableData();
+        visualizeTable();
+
+    }
+
+    private void visualizeTable() {
+        colMemberId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        colMemberName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colMemberAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
+        colMemberEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+        colMemberContact.setCellValueFactory(new PropertyValueFactory<>("contact"));
+    }
 
     public void txtMemberIdOnAction(ActionEvent actionEvent) {
         Optional<MemberDTO> search = service.search(txtMemberId.getText());
@@ -85,7 +105,7 @@ public class ManageMemberFormController {
                 try {
                     delete = service.delete(memberId);
                     if (!delete){
-                        errorMessage = "User Not Found - Check ID";
+                        errorMessage = "User Not Found Please Check ID";
                     }
                 } catch (MemberException e) {
                     errorMessage = e.getMessage();
@@ -100,6 +120,21 @@ public class ManageMemberFormController {
             new Alert(Alert.AlertType.ERROR,errorMessage).show();
         }
 
+    }
+
+    public void loadTableData(){
+        try {
+            List<MemberTM> list = new ArrayList<>();
+            List<MemberDTO> all = service.getAll();
+            for (MemberDTO memberDTO : all) {
+                MemberTM memberTM = convertMemberDtoToTM(memberDTO);
+                list.add(memberTM);
+            }
+            ObservableList<MemberTM> memberTMS = FXCollections.observableArrayList(list);
+            tblMember.setItems(memberTMS);
+        } catch (MemberException e) {
+            e.printStackTrace();
+        }
     }
 
     public void btnClearOnAction(ActionEvent actionEvent) {
@@ -130,6 +165,16 @@ public class ManageMemberFormController {
         txtMemberAddress.clear();
         txtMemberEmail.clear();
         txtMemberContact.clear();
+    }
+
+    private MemberTM convertMemberDtoToTM(MemberDTO memberDTO){
+        MemberTM memberTM = new MemberTM();
+        memberTM.setId(memberDTO.getId());
+        memberTM.setName(memberDTO.getName());
+        memberTM.setAddress(memberDTO.getAddress());
+        memberTM.setEmail(memberDTO.getEmail());
+        memberTM.setContact(memberDTO.getContact());
+        return memberTM;
     }
 
 }
