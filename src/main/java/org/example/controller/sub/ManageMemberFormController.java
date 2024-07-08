@@ -6,7 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.example.dto.MemberDTO;
-import org.example.service.MemberService;
+import org.example.service.custom.impl.MemberServiceIMPL;
 import org.example.tableModels.MemberTM;
 import org.example.util.exceptions.MemberException;
 
@@ -27,12 +27,11 @@ public class ManageMemberFormController {
     public TableColumn<MemberTM,String> colMemberEmail;
     public TableColumn<MemberTM,String> colMemberContact;
 
-    private final MemberService service = new MemberService();
+    private final MemberServiceIMPL service = new MemberServiceIMPL();
 
     public void initialize(){
         loadTableData();
         visualizeTable();
-
     }
 
     private void visualizeTable() {
@@ -63,7 +62,7 @@ public class ManageMemberFormController {
         boolean isMemberSaved = false;
         String errorMessage = "Unexpected Error - Contact Developer";
         try {
-            isMemberSaved = service.addMember(memberDTO);
+            isMemberSaved = service.add(memberDTO);
 
         } catch (MemberException e) {
             errorMessage = e.getMessage();
@@ -105,7 +104,7 @@ public class ManageMemberFormController {
                 try {
                     delete = service.delete(memberId);
                     if (!delete){
-                        errorMessage = "User Not Found Please Check ID";
+                        errorMessage = "User Not Found - Check ID";
                     }
                 } catch (MemberException e) {
                     errorMessage = e.getMessage();

@@ -13,7 +13,6 @@ public class DBConnection {
         connection= DriverManager.getConnection("jdbc:mysql://localhost:3306/library_test", "root", "7889");
     }
 
-
     public static DBConnection getInstance() throws ClassNotFoundException, SQLException {
         if(dbConnection==null){
             dbConnection = new DBConnection();

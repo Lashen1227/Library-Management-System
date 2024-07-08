@@ -1,20 +1,23 @@
-package org.example.service;
+package org.example.service.custom.impl;
 
 import org.example.dto.MemberDTO;
 import org.example.entity.Member;
-import org.example.repo.MemberRepo;
+import org.example.repo.custom.MemberRepo;
+import org.example.repo.custom.impl.MemberRepoIMPL;
+import org.example.service.custom.MemberService;
 import org.example.util.exceptions.MemberException;
 
 import java.sql.SQLException;
-import java.util.Optional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-public class MemberService {
-    private final MemberRepo memberRepo = new MemberRepo();
+public class MemberServiceIMPL implements MemberService {
+    private final MemberRepo memberRepo = new MemberRepoIMPL();
 
-    public boolean addMember(MemberDTO member) throws MemberException {
-        Member entity = this.covnvertDTOtoEntity(member);
+    @Override
+    public boolean add(MemberDTO member) throws MemberException {
+        Member entity = this.convertDTOtoEntity(member);
         try {
             boolean isSaved = memberRepo.save(entity);
             return isSaved;
@@ -35,6 +38,8 @@ public class MemberService {
         }
     }
 
+
+    @Override
     public boolean delete(String id) throws MemberException{
         try {
             boolean delete = memberRepo.delete(id);
@@ -45,8 +50,9 @@ public class MemberService {
         }
     }
 
+    @Override
     public boolean update(MemberDTO member) throws MemberException {
-        Member entity = covnvertDTOtoEntity(member);
+        Member entity = convertDTOtoEntity(member);
         try {
             boolean isUpdated = memberRepo.update(entity);
             return isUpdated;
@@ -62,11 +68,12 @@ public class MemberService {
         }
     }
 
+    @Override
     public Optional<MemberDTO> search(String id){
         try {
             Optional<Member> member = memberRepo.search(id);
             if (member.isPresent()){
-                MemberDTO memberDTO = convnertEntityToDTO(member.get());
+                MemberDTO memberDTO = convertEntityToDTO(member.get());
                 return Optional.of(memberDTO);
             }
         } catch (SQLException | ClassNotFoundException e) {
@@ -75,6 +82,7 @@ public class MemberService {
         return Optional.empty();
     }
 
+    @Override
     public List<MemberDTO> getAll() throws MemberException {
         try {
             List<Member> all = memberRepo.getAll();
@@ -83,7 +91,7 @@ public class MemberService {
             }
             List<MemberDTO> memberDTOS = new ArrayList<>();
             for (Member member : all) {
-                MemberDTO memberDTO = convnertEntityToDTO(member);
+                MemberDTO memberDTO = convertEntityToDTO(member);
                 memberDTOS.add(memberDTO);
             }
             return memberDTOS;
@@ -92,7 +100,8 @@ public class MemberService {
         }
     }
 
-    private Member covnvertDTOtoEntity(MemberDTO memberDTO){
+
+    private Member convertDTOtoEntity(MemberDTO memberDTO){
         Member member = new Member();
         member.setId(memberDTO.getId());
         member.setName(memberDTO.getName());
@@ -102,7 +111,7 @@ public class MemberService {
         return member;
     }
 
-    private MemberDTO convnertEntityToDTO(Member memberEntity){
+    private MemberDTO convertEntityToDTO(Member memberEntity){
         MemberDTO memberDTO = new MemberDTO();
         memberDTO.setId(memberEntity.getId());
         memberDTO.setName(memberEntity.getName());
