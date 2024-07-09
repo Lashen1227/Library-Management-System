@@ -18,7 +18,7 @@
                         <Font name="System Bold" size="21.0" />
                     </font>
                 </Label>
-                <TextField fx:id="txtPublisherId" layoutX="27.0" layoutY="82.0" prefHeight="25.0" prefWidth="315.0" promptText="Publisher ID" />
+                <TextField fx:id="txtPublisherId" layoutX="27.0" layoutY="82.0" onAction="#txtPublisherIdOnAction" prefHeight="25.0" prefWidth="315.0" promptText="Publisher ID" />
                 <TextField fx:id="txtPublisherName" layoutX="27.0" layoutY="115.0" prefHeight="25.0" prefWidth="315.0" promptText="Publisher Name" />
                 <TextField fx:id="txtPublisherLocation" layoutX="27.0" layoutY="154.0" prefHeight="25.0" prefWidth="315.0" promptText="Publisher Location" />
                 <TextField fx:id="txtPublisherContact" layoutX="27.0" layoutY="192.0" prefHeight="25.0" prefWidth="315.0" promptText="Publisher Contact" />

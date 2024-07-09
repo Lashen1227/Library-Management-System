@@ -46,4 +46,7 @@ public class ManageAuthorsAndPublishersController {
     public void btnSavePublisherOnAction(ActionEvent actionEvent) {
 
     }
+
+    public void txtPublisherIdOnAction(ActionEvent actionEvent) {
+    }
 }
