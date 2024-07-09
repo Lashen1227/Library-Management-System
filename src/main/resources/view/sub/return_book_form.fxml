@@ -8,6 +8,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="717.0" prefWidth="990.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controller.sub.ReturnBookFormController">
     <children>
@@ -21,14 +22,14 @@
                 <TableColumn fx:id="colReturnDate" prefWidth="163.0" text="Return Date" />
             </columns>
         </TableView>
-        <TextField fx:id="txtSearchKeyword" layoutX="27.0" layoutY="46.0" prefHeight="25.0" prefWidth="212.0" promptText="Enter KeyWord To Search" />
-        <RadioButton fx:id="rbBookId" layoutX="264.0" layoutY="50.0" mnemonicParsing="false" text="Book ID">
+        <TextField fx:id="txtSearchKeyword" layoutX="27.0" layoutY="59.0" prefHeight="25.0" prefWidth="212.0" promptText="Enter KeyWord To Search" />
+        <RadioButton fx:id="rbBookId" layoutX="264.0" layoutY="63.0" mnemonicParsing="false" text="Book ID">
             <toggleGroup>
                 <ToggleGroup fx:id="test" />
             </toggleGroup>
         </RadioButton>
-        <RadioButton fx:id="rbMemberId" layoutX="349.0" layoutY="50.0" mnemonicParsing="false" text="Member ID" toggleGroup="$test" />
-        <RadioButton fx:id="rbMemberMobileNumber" layoutX="455.0" layoutY="50.0" mnemonicParsing="false" text="Member Mobile Number" toggleGroup="$test" />
+        <RadioButton fx:id="rbMemberId" layoutX="349.0" layoutY="63.0" mnemonicParsing="false" text="Member ID" toggleGroup="$test" />
+        <RadioButton fx:id="rbMemberMobileNumber" layoutX="455.0" layoutY="63.0" mnemonicParsing="false" text="Member Mobile Number" toggleGroup="$test" />
         <Label layoutX="27.0" layoutY="561.0" prefHeight="36.0" prefWidth="119.0" text="Late Date Count   :" />
         <Label fx:id="lblLateDateCount" layoutX="146.0" layoutY="561.0" prefHeight="36.0" prefWidth="50.0" />
         <TextField fx:id="txtFineForOneDay" layoutX="27.0" layoutY="603.0" prefHeight="25.0" prefWidth="192.0" promptText="Fine For One Day" />
@@ -38,5 +39,10 @@
         <TextField fx:id="txtPayment" layoutX="27.0" layoutY="676.0" prefHeight="25.0" prefWidth="192.0" promptText="Payment" />
         <Label layoutX="698.0" layoutY="668.0" prefHeight="25.0" prefWidth="70.0" text="Balance :" />
         <Label fx:id="lblBalance" layoutX="775.0" layoutY="668.0" prefHeight="25.0" prefWidth="70.0" />
+        <Label alignment="CENTER" layoutX="382.0" layoutY="-8.0" prefHeight="31.0" prefWidth="230.0" text="Return Book Records">
+            <font>
+                <Font name="System Bold" size="21.0" />
+            </font>
+        </Label>
     </children>
 </AnchorPane>

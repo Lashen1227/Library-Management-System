@@ -30,10 +30,10 @@
     -fx-font-weight: 5px;
 }
 .round-button-black:hover{
-    -fx-effect: dropshadow(three-pass-box, rgba(156, 231, 212, 0.8), 10, 0.8, 0, 0);
+    -fx-effect: dropshadow(three-pass-box, rgba(29, 201, 253, 0.57), 10, 0.8, 0, 0);
 }
 .round-button-black:pressed{
-    -fx-effect: dropshadow(three-pass-box, rgba(29, 181, 249, 0.8), 10, 0.8, 0, 0);
+    -fx-effect: dropshadow(three-pass-box, rgba(29, 201, 253, 0.57), 10, 0.8, 0, 0);
 }
 
 .dashboard-page-heading {

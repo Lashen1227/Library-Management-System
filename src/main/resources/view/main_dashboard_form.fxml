@@ -14,13 +14,13 @@
                 <Button layoutX="69.0" layoutY="250.0" mnemonicParsing="false" onAction="#btnManageMembersOnAction" prefHeight="46.0" prefWidth="222.0" styleClass="side-corner-round-button-black" text="Manage Members" />
                 <Button layoutX="69.0" layoutY="320.0" mnemonicParsing="false" onAction="#btnManageBooksOnAction" prefHeight="46.0" prefWidth="222.0" styleClass="side-corner-round-button-black" text="Manage Books" />
                 <Button layoutX="69.0" layoutY="394.0" mnemonicParsing="false" onAction="#btnManageAuthorsAndPublishersOnAction" prefHeight="46.0" prefWidth="222.0" styleClass="side-corner-round-button-black" text="Manage Authors And Publishers" />
-                <Button layoutX="69.0" layoutY="466.0" mnemonicParsing="false" onAction="#btnBorrowBookRecordsOnAction" prefHeight="46.0" prefWidth="222.0" styleClass="side-corner-round-button-black" text="Borrow Book Record" />
+                <Button layoutX="69.0" layoutY="466.0" mnemonicParsing="false" onAction="#btnBorrowBookRecordsOnAction" prefHeight="46.0" prefWidth="222.0" styleClass="side-corner-round-button-black" text="Borrow Book Records" />
                 <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="71.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../assets/img/boy 1.png" />
                     </image>
                 </ImageView>
-                <Button layoutX="69.0" layoutY="536.0" mnemonicParsing="false" onAction="#btnReturnBookRecordOnAction" prefHeight="46.0" prefWidth="222.0" styleClass="side-corner-round-button-black" text="Return Book Record" />
+                <Button layoutX="69.0" layoutY="536.0" mnemonicParsing="false" onAction="#btnReturnBookRecordOnAction" prefHeight="46.0" prefWidth="222.0" styleClass="side-corner-round-button-black" text="Return Book Records" />
             </children>
         </AnchorPane>
         <AnchorPane fx:id="mainPane" layoutX="306.0" layoutY="33.0" prefHeight="717.0" prefWidth="990.0">
