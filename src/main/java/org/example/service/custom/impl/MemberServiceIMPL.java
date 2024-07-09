@@ -1,11 +1,11 @@
 package org.example.service.custom.impl;
 
-import org.example.dto.MemberDTO;
-import org.example.entity.Member;
+import org.example.dto.custom.MemberDTO;
+import org.example.entity.custom.Member;
 import org.example.repo.custom.MemberRepo;
 import org.example.repo.custom.impl.MemberRepoIMPL;
 import org.example.service.custom.MemberService;
-import org.example.util.exceptions.MemberException;
+import org.example.util.exceptions.custom.MemberException;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -69,7 +69,7 @@ public class MemberServiceIMPL implements MemberService {
     }
 
     @Override
-    public Optional<MemberDTO> search(String id){
+    public Optional<MemberDTO> search(String id) throws MemberException {
         try {
             Optional<Member> member = memberRepo.search(id);
             if (member.isPresent()){
@@ -77,7 +77,7 @@ public class MemberServiceIMPL implements MemberService {
                 return Optional.of(memberDTO);
             }
         } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
+            throw new MemberException("Please Contact Developer",e);
         }
         return Optional.empty();
     }
@@ -96,10 +96,9 @@ public class MemberServiceIMPL implements MemberService {
             }
             return memberDTOS;
         } catch (SQLException | ClassNotFoundException e) {
-            throw new MemberException("Contact Developer",e);
+            throw new MemberException("Please Contact Developer",e);
         }
     }
-
 
     private Member convertDTOtoEntity(MemberDTO memberDTO){
         Member member = new Member();
@@ -120,5 +119,4 @@ public class MemberServiceIMPL implements MemberService {
         memberDTO.setContact(memberEntity.getContact());
         return memberDTO;
     }
-
 }

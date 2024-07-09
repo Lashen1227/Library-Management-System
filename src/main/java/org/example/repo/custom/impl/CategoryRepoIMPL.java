@@ -1,6 +1,6 @@
 package org.example.repo.custom.impl;
 
-import org.example.entity.Category;
+import org.example.entity.custom.Category;
 import org.example.repo.custom.CategoryRepo;
 import org.example.util.CrudUtil;
 

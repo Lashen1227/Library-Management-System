@@ -1,6 +1,8 @@
-package org.example.entity;
+package org.example.entity.custom;
 
-public class Member {
+import org.example.entity.SuperEntity;
+
+public class Member implements SuperEntity {
     private String id;
     private String name;
     private String address;

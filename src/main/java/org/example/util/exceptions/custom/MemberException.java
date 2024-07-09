@@ -1,6 +1,8 @@
-package org.example.util.exceptions;
+package org.example.util.exceptions.custom;
 
-public class MemberException extends Exception{
+import org.example.util.exceptions.ServiceException;
+
+public class MemberException extends ServiceException {
     public MemberException() {
     }
 

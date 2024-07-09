@@ -1,6 +1,6 @@
 package org.example.repo.custom.impl;
 
-import org.example.entity.Book;
+import org.example.entity.custom.Book;
 import org.example.repo.custom.BookRepo;
 import org.example.util.CrudUtil;
 
@@ -38,7 +38,6 @@ public class BookRepoIMPL implements BookRepo {
             book.setPublisherId(rs.getInt(5));
             book.setMainCategoryId(rs.getInt(6));
             return Optional.of(book);
-
         }
         return Optional.empty();
     }

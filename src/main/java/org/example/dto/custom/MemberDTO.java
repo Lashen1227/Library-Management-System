@@ -1,5 +1,6 @@
-package org.example.dto;
+package org.example.dto.custom;
 
+import org.example.dto.SuperDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +10,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class MemberDTO {
+public class MemberDTO implements SuperDTO {
     private String id;
     private String name;
     private String address;

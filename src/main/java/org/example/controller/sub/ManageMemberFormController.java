@@ -5,10 +5,10 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import org.example.dto.MemberDTO;
+import org.example.dto.custom.MemberDTO;
 import org.example.service.custom.impl.MemberServiceIMPL;
 import org.example.tableModels.MemberTM;
-import org.example.util.exceptions.MemberException;
+import org.example.util.exceptions.custom.MemberException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +29,7 @@ public class ManageMemberFormController {
 
     private final MemberServiceIMPL service = new MemberServiceIMPL();
 
+    // Initialize Method
     public void initialize(){
         loadTableData();
         visualizeTable();
@@ -43,7 +44,13 @@ public class ManageMemberFormController {
     }
 
     public void txtMemberIdOnAction(ActionEvent actionEvent) {
-        Optional<MemberDTO> search = service.search(txtMemberId.getText());
+        Optional<MemberDTO> search = null;
+        try {
+            search = service.search(txtMemberId.getText());
+        } catch (MemberException e) {
+            new Alert(Alert.AlertType.ERROR,e.getMessage()).show();
+            return;
+        }
         if (search.isPresent()){
             setDataToFields(search.get());
         }else{
@@ -57,10 +64,11 @@ public class ManageMemberFormController {
     public void txtMemberContactOnAction(ActionEvent actionEvent) {
     }
 
+    // Save Button On Action
     public void btnSaveOnAction(ActionEvent actionEvent) {
         MemberDTO memberDTO = collectData();
         boolean isMemberSaved = false;
-        String errorMessage = "Unexpected Error - Contact Developer";
+        String errorMessage = "Unexpected Error Please Contact Developer";
         try {
             isMemberSaved = service.add(memberDTO);
 
@@ -69,13 +77,14 @@ public class ManageMemberFormController {
         }
         if(isMemberSaved){
             new Alert(Alert.AlertType.INFORMATION,"Member Saved Successfully").show();
-            clearFields();
             loadTableData();
+            clearFields();
         }else{
             new Alert(Alert.AlertType.ERROR,errorMessage).show();
         }
     }
 
+    // Update Button On Action
     public void btnUpdateOnAction(ActionEvent actionEvent) {
         MemberDTO memberDTO = collectData();
         boolean isUpdated = false;
@@ -94,6 +103,7 @@ public class ManageMemberFormController {
         }
     }
 
+    // Delete Button On Action
     public void btnDeleteOnAction(ActionEvent actionEvent) {
         String memberId = txtMemberId.getText();
         boolean delete = false;
@@ -106,12 +116,11 @@ public class ManageMemberFormController {
                 try {
                     delete = service.delete(memberId);
                     if (!delete){
-                        errorMessage = "User Not Found - Check ID";
+                        errorMessage = "User Not Found -Please Check ID";
                     }
                 } catch (MemberException e) {
                     errorMessage = e.getMessage();
                 }
-
             }
         }
         if (delete){
@@ -121,7 +130,6 @@ public class ManageMemberFormController {
         }else {
             new Alert(Alert.AlertType.ERROR,errorMessage).show();
         }
-
     }
 
     public void loadTableData(){
@@ -178,5 +186,4 @@ public class ManageMemberFormController {
         memberTM.setContact(memberDTO.getContact());
         return memberTM;
     }
-
 }

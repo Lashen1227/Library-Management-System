@@ -1,6 +1,6 @@
 package org.example.repo.custom.impl;
 
-import org.example.entity.Member;
+import org.example.entity.custom.Member;
 import org.example.repo.custom.MemberRepo;
 import org.example.util.DBConnection;
 
