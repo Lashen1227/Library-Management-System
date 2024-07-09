@@ -1,6 +1,8 @@
-package org.example.entity;
+package org.example.entity.custom;
 
-public class Publisher {
+import org.example.entity.SuperEntity;
+
+public class Publisher implements SuperEntity {
     private int id;
     private String name;
     private String location;

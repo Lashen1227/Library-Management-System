@@ -1,6 +1,6 @@
 package org.example.repo.custom.impl;
 
-import org.example.entity.Publisher;
+import org.example.entity.custom.Publisher;
 import org.example.repo.custom.PublisherRepo;
 import org.example.util.CrudUtil;
 
@@ -27,7 +27,7 @@ public class PublisherRepoIMPL implements PublisherRepo {
     @Override
     public Optional<Publisher> search(Integer s) throws SQLException, ClassNotFoundException {
         String sql = "SELECT * FROM Publisher WHERE id=?";
-        ResultSet execute = CrudUtil.execute(sql);
+        ResultSet execute = CrudUtil.execute(sql,s);
         if (execute.next()) {
             Publisher publisher = new Publisher();
             publisher.setId(execute.getInt(1));

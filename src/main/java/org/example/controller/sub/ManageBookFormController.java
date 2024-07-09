@@ -5,6 +5,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import org.example.service.custom.BookService;
+import org.example.service.custom.impl.BookServiceIMPL;
 
 public class ManageBookFormController {
     public TextField txtBookId;
@@ -24,6 +26,9 @@ public class ManageBookFormController {
     public TableView tblAuthors;
     public TableColumn colAuthorName;
     public TableColumn colAuthorOption;
+
+    private final BookService service = new BookServiceIMPL();
+
 
     public void bookIdOnAcion(ActionEvent actionEvent) {
     }

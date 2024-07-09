@@ -1,6 +1,6 @@
 package org.example.repo.custom.impl;
 
-import org.example.entity.Author;
+import org.example.entity.custom.Author;
 import org.example.repo.custom.AuthorRepo;
 import org.example.util.CrudUtil;
 
