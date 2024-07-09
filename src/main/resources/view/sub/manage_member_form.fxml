@@ -33,7 +33,7 @@
                 <TableColumn fx:id="colMemberContact" prefWidth="111.0" text="Member Contact" />
             </columns>
         </TableView>
-        <Label alignment="CENTER" layoutX="382.0" layoutY="-8.0" prefHeight="31.0" prefWidth="219.0" text="Manage Members">
+        <Label alignment="CENTER" layoutX="382.0" layoutY="11.0" prefHeight="31.0" prefWidth="219.0" text="Manage Members">
             <font>
                 <Font name="System Bold" size="21.0" />
             </font>
