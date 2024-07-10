@@ -26,8 +26,6 @@
     -fx-background-radius: 20px;
     -fx-background-color: #3B3939;
     -fx-text-fill: white;
-    -fx-font-style: bold;
-    -fx-font-weight: 5px;
 }
 .round-button-black:hover{
     -fx-effect: dropshadow(three-pass-box, rgba(29, 201, 253, 0.57), 10, 0.8, 0, 0);
@@ -41,4 +39,18 @@
     -fx-font-family:  "Georgia", serif;
     -fx-font-weight: bold;
     -fx-text-fill: #3B3939;
+}
+
+.backButtonImage {
+    -fx-background-radius: 100%;
+    -fx-border-color: #3B3939;
+    -fx-cursor: hand;
+}
+
+.backButtonImage:hover {
+    -fx-effect: dropshadow(three-pass-box, rgba(146, 255, 239, 0.8), 10, 0.8, 0, 0);
+}
+
+.backButtonImage:pressed {
+    -fx-effect: dropshadow(three-pass-box, rgba(41, 102, 241, 0.8), 10, 0.8, 0, 0);
 }

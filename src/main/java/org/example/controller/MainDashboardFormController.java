@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
@@ -43,4 +44,7 @@ public class MainDashboardFormController {
         }
     }
 
+    public void btnBackOnAction(MouseEvent mouseEvent) {
+        mainPane.getScene().getWindow().hide();
+    }
 }

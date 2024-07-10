@@ -18,8 +18,6 @@
     -fx-background-radius: 20px;
     -fx-background-color: #3B3939;
     -fx-text-fill: white;
-    -fx-font-style: bold;
-    -fx-font-weight: 5px;
     -fx-cursor: hand;
 }
 .round-button-black:hover{
