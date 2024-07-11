@@ -26,7 +26,7 @@ public class PublisherRepoIMPL implements PublisherRepo {
 
     @Override
     public Optional<Publisher> search(Integer s) throws SQLException, ClassNotFoundException {
-        String sql = "SELECT * FROM Publisher WHERE id=?";
+        String sql = "SELECT * FROM Publisher WHERE id= ?" ;
         ResultSet execute = CrudUtil.execute(sql,s);
         if (execute.next()) {
             Publisher publisher = new Publisher();

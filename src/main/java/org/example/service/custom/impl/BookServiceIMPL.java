@@ -6,6 +6,7 @@ import org.example.repo.custom.BookRepo;
 import org.example.repo.custom.impl.BookRepoIMPL;
 import org.example.service.custom.BookService;
 import org.example.util.exceptions.custom.BookException;
+import org.modelmapper.ModelMapper;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class BookServiceIMPL implements BookService {
-
+    private final ModelMapper mapper = new ModelMapper();
     private final BookRepo repo = new BookRepoIMPL();
 
     @Override
@@ -46,6 +47,7 @@ public class BookServiceIMPL implements BookService {
             }
             throw new BookException("Error Occurred Please Contact Developer",e);
         }
+
     }
 
     @Override
@@ -53,7 +55,7 @@ public class BookServiceIMPL implements BookService {
         try {
             return repo.delete(integer);
         } catch (SQLException | ClassNotFoundException e) {
-            throw new BookException("Not Fully Implemented",e);
+            throw new BookException("Not Implemented Yet",e);
         }
     }
 
@@ -88,26 +90,10 @@ public class BookServiceIMPL implements BookService {
     }
 
     private Book convertDtoToEntity(BookDTO dto){
-        Book book = new Book();
-        book.setId(dto.getId());
-        book.setName(dto.getName());
-        book.setAuthor(dto.getAuthor());
-        book.setIsbn(dto.getIsbn());
-        book.setPrice(dto.getPrice());
-        book.setMainCategoryId(dto.getMainCategoryId());
-        book.setPublisherId(dto.getPublisherId());
-        return book;
+        return mapper.map(dto,Book.class);
     }
 
     public BookDTO convertEntityToDto(Book book){
-        BookDTO dto = new BookDTO();
-        dto.setId(book.getId());
-        dto.setName(book.getName());
-        dto.setAuthor(book.getAuthor());
-        dto.setIsbn(book.getIsbn());
-        dto.setPrice(book.getPrice());
-        dto.setMainCategoryId(book.getMainCategoryId());
-        dto.setPublisherId(book.getPublisherId());
-        return dto;
+        return mapper.map(book,BookDTO.class);
     }
 }
