@@ -14,35 +14,33 @@ public class AuthorRepoIMPL implements AuthorRepo {
     @Override
     public boolean save(Author author) throws SQLException, ClassNotFoundException {
         String sql = "INSERT INTO Author(name,contact) VALUES (?,?)";
-        boolean execute = CrudUtil.execute(sql, author.getId(), author.getName());
-        return execute;
+        return CrudUtil.execute(sql,author.getName(),author.getContact());
     }
 
     @Override
     public boolean update(Author author) throws SQLException, ClassNotFoundException {
-        String sql = "UPDATE Author SET name=? , contact = ?  WHERE id=?";
-        boolean execute = CrudUtil.execute(sql, author.getName(),author.getContact(), author.getId());
-        return execute;
+        String sql = "UPDATE Author SET name=?,contact=? WHERE id=?";
+        return CrudUtil.execute(sql, author.getName(), author.getContact(),author.getId());
     }
 
     @Override
-    public Optional<Author> search(Integer integer) throws SQLException, ClassNotFoundException {
+    public Optional<Author> search(Integer s) throws SQLException, ClassNotFoundException {
         String sql = "SELECT * FROM Author WHERE id=?";
-        ResultSet execute = CrudUtil.execute(sql);
-        if (execute.next()) {
+        ResultSet rs = CrudUtil.execute(sql,s);
+        if (rs.next()) {
             Author author = new Author();
-            author.setId(execute.getInt(1));
-            author.setName(execute.getString(2));
-            author.setContact(execute.getString(3));
+            author.setId(rs.getInt(1));
+            author.setName(rs.getString(2));
+            author.setContact(rs.getString(3));
             return Optional.of(author);
         }
         return Optional.empty();
     }
 
     @Override
-    public boolean delete(Integer integer) throws SQLException, ClassNotFoundException {
+    public boolean delete(Integer i) throws SQLException, ClassNotFoundException {
         String sql = "DELETE FROM Author WHERE id=?";
-        return CrudUtil.execute(sql, integer);
+        return CrudUtil.execute(sql,i);
     }
 
     @Override

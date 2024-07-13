@@ -42,7 +42,7 @@
                         <Font name="System Bold" size="21.0" />
                     </font>
                 </Label>
-                <TextField fx:id="txtAuthorId" layoutX="35.0" layoutY="85.0" prefHeight="25.0" prefWidth="315.0" promptText="Author ID" />
+                <TextField fx:id="txtAuthorId" layoutX="35.0" layoutY="85.0" onAction="#txtAuthorIdOnAction" prefHeight="25.0" prefWidth="315.0" promptText="Author ID" />
                 <TextField fx:id="txtAuthorName" layoutX="35.0" layoutY="118.0" prefHeight="25.0" prefWidth="315.0" promptText="Author Name" />
                 <TextField fx:id="txtAuthorContact" layoutX="35.0" layoutY="157.0" prefHeight="25.0" prefWidth="315.0" promptText="Author Contact" />
                 <Button layoutX="55.0" layoutY="250.0" mnemonicParsing="false" onAction="#btnSaveAuthorOnAction" text="Save" />

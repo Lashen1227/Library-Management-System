@@ -7,13 +7,13 @@ public class Author implements SuperEntity {
     private String name;
     private String contact;
 
-    public Author() {
-    }
-
     public Author(int id, String name, String contact) {
         this.id = id;
         this.name = name;
         this.contact = contact;
+    }
+
+    public Author() {
     }
 
     public int getId() {
