@@ -5,7 +5,7 @@
 ![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
 ![CSS](https://img.shields.io/badge/CSS-1572B6?style=for-the-badge&logo=css3&logoColor=white)
 
-This is a Desktop Application created using Java, JavaFX, MySQL, and styled with CSS. The Library Management System allows to manage library operations efficiently.
+This Desktop Application created using Java, JavaFX, MySQL, and styled with CSS. The Library Management System allows to manage library operations efficiently.
 
 ## Table of Contents
 - [Features](#features)
