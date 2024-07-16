@@ -11,6 +11,8 @@ import org.example.repo.util.RepoTypes;
 import org.example.service.custom.BookService;
 import org.example.service.custom.impl.BookServiceIMPL;
 import org.example.service.util.OtherDependancies;
+import org.example.service.util.ServiceFactory;
+import org.example.service.util.ServiceType;
 import org.modelmapper.ModelMapper;
 
 public class ManageBookFormController {
@@ -32,10 +34,10 @@ public class ManageBookFormController {
     public TableColumn colAuthorName;
     public TableColumn colAuthorOption;
 
-    ModelMapper mapper = OtherDependancies.getInstance().getMapper();
-    BookRepo bookRepo = RepoFactory.getInstance().getRepo(RepoTypes.BOOK_REPO);
 
-    private final BookService service = new BookServiceIMPL(mapper,bookRepo);
+
+    private final BookService service = (BookService) ServiceFactory.getInstance()
+            .getService(ServiceType.BOOK_SERVICE);
 
 
     public void bookIdOnAcion(ActionEvent actionEvent) {

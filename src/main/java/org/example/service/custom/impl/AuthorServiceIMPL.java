@@ -5,8 +5,7 @@ import org.example.entity.custom.Author;
 import org.example.repo.custom.AuthorRepo;
 import org.example.service.custom.AuthorService;
 import org.example.util.exceptions.custom.AuthorException;
-import org.example.util.exceptions.custom.BookException;
-import org.example.util.exceptions.custom.AuthorException;
+import org.modelmapper.ModelMapper;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -15,10 +14,12 @@ import java.util.Optional;
 
 public class AuthorServiceIMPL implements AuthorService {
 
-    private AuthorRepo repo;
+    private final AuthorRepo repo;
+    private final ModelMapper mapper;
 
-    public AuthorServiceIMPL(AuthorRepo repo) {
+    public AuthorServiceIMPL(ModelMapper mapper,AuthorRepo repo) {
         this.repo = repo;
+        this.mapper = mapper;
     }
 
     @Override
@@ -94,18 +95,10 @@ public class AuthorServiceIMPL implements AuthorService {
     }
 
     private AuthorDTO convertToDTO(Author author){
-        AuthorDTO authorDTO = new AuthorDTO();
-        authorDTO.setId(author.getId());
-        authorDTO.setName(author.getName());
-        authorDTO.setContact(author.getContact());
-        return authorDTO;
+        return mapper.map(author,AuthorDTO.class);
     }
 
     private Author convertToEntity(AuthorDTO authorDTO){
-        Author author = new Author();
-        author.setId(authorDTO.getId());
-        author.setName(authorDTO.getName());
-        author.setContact(authorDTO.getContact());
-        return author;
+        return mapper.map(authorDTO,Author.class);
     }
 }

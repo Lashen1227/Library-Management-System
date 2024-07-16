@@ -8,6 +8,7 @@ import org.example.service.custom.PublisherService;
 import org.example.util.exceptions.ServiceException;
 import org.example.util.exceptions.custom.BookException;
 import org.example.util.exceptions.custom.PublisherException;
+import org.modelmapper.ModelMapper;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -16,10 +17,12 @@ import java.util.Optional;
 
 public class PublisherServiceIMPL implements PublisherService {
 
-    private PublisherRepo repo;
+    private final PublisherRepo repo;
+    private final ModelMapper mapper;
 
-    public PublisherServiceIMPL(PublisherRepo repo) {
+    public PublisherServiceIMPL(ModelMapper mapper,PublisherRepo repo) {
         this.repo = repo;
+        this.mapper = mapper;
     }
 
     @Override
@@ -95,20 +98,10 @@ public class PublisherServiceIMPL implements PublisherService {
     }
 
     private PublisherDTO convertToDTO(Publisher publisher){
-        PublisherDTO publisherDTO = new PublisherDTO();
-        publisherDTO.setId(publisher.getId());
-        publisherDTO.setName(publisher.getName());
-        publisherDTO.setLocation(publisher.getLocation());
-        publisherDTO.setContact(publisher.getContact());
-        return publisherDTO;
+        return mapper.map(publisher,PublisherDTO.class);
     }
 
     private Publisher convertToEntity(PublisherDTO publisherDTO){
-        Publisher publisher = new Publisher();
-        publisher.setId(publisherDTO.getId());
-        publisher.setName(publisherDTO.getName());
-        publisher.setLocation(publisherDTO.getLocation());
-        publisher.setContact(publisherDTO.getContact());
-        return publisher;
+        return mapper.map(publisherDTO,Publisher.class);
     }
 }

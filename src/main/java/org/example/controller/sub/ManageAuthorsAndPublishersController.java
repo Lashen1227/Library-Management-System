@@ -1,27 +1,18 @@
 package org.example.controller.sub;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.example.dto.custom.AuthorDTO;
 import org.example.dto.custom.PublisherDTO;
-import org.example.entity.custom.Author;
-import org.example.repo.custom.AuthorRepo;
 import org.example.service.custom.AuthorService;
 import org.example.service.custom.PublisherService;
-import org.example.service.custom.impl.AuthorServiceIMPL;
-import org.example.service.custom.impl.PublisherServiceIMPL;
 import org.example.tableModels.AuthorTM;
 import org.example.tableModels.PublisherTM;
 import org.example.util.exceptions.ServiceException;
-import org.example.repo.custom.PublisherRepo;
-import org.example.repo.util.RepoFactory;
-import org.example.repo.util.RepoTypes;
-import org.example.util.exceptions.custom.PublisherException;
-import org.example.util.exceptions.custom.AuthorException;
+import org.example.service.util.ServiceFactory;
+import org.example.service.util.ServiceType;
 import org.modelmapper.ModelMapper;
 
 import java.util.ArrayList;
@@ -45,11 +36,11 @@ public class ManageAuthorsAndPublishersController {
     public TableColumn<AuthorTM,String> colAuthorName;
     public TableColumn<AuthorTM,String> colAuthorContact;
 
-    PublisherRepo publisherRepo = RepoFactory.getInstance().getRepo(RepoTypes.PUBLISHER_REPO);
-    private final PublisherService publisherService = new PublisherServiceIMPL(publisherRepo);
+    private final PublisherService publisherService =(PublisherService) ServiceFactory.getInstance()
+            .getService(ServiceType.PUBLISHER_SERVICE);
     private final ModelMapper modelMapper = new ModelMapper();
-    AuthorRepo authorRepo = RepoFactory.getInstance().getRepo(RepoTypes.AUTHOR_REPO);
-    private final AuthorService authorService = new AuthorServiceIMPL(authorRepo);
+    private final AuthorService authorService =(AuthorService) ServiceFactory.getInstance()
+            .getService(ServiceType.AUTHOR_SERVICE);
     private final ModelMapper modelAuthorMapper = new ModelMapper();
 
     public void initialize() {

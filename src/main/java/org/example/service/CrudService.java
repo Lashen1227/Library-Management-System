@@ -6,7 +6,7 @@ import org.example.util.exceptions.ServiceException;
 import java.util.List;
 import java.util.Optional;
 
-public interface CrudService <T extends SuperDTO,ID> {
+public interface CrudService <T extends SuperDTO,ID>  extends SuperService{
     boolean add(T t) throws ServiceException;
     boolean update(T t) throws ServiceException;
     boolean delete(ID id) throws ServiceException;

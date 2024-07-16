@@ -5,6 +5,7 @@ import org.example.entity.custom.Member;
 import org.example.repo.custom.MemberRepo;
 import org.example.service.custom.MemberService;
 import org.example.util.exceptions.custom.MemberException;
+import org.modelmapper.ModelMapper;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -13,10 +14,11 @@ import java.util.Optional;
 
 public class MemberServiceIMPL implements MemberService {
     private final MemberRepo memberRepo;
+    private final ModelMapper modelMapper;
 
-    public MemberServiceIMPL(MemberRepo memberRepo) {
+    public MemberServiceIMPL(ModelMapper mapper,MemberRepo memberRepo) {
         this.memberRepo = memberRepo;
-
+        this.modelMapper = mapper;
     }
 
     @Override
@@ -41,7 +43,6 @@ public class MemberServiceIMPL implements MemberService {
             throw new MemberException("Error Occurred Please Contact Developer",e);
         }
     }
-
 
     @Override
     public boolean delete(String id) throws MemberException{
@@ -103,6 +104,8 @@ public class MemberServiceIMPL implements MemberService {
             throw new MemberException("Please Contact Developer",e);
         }
     }
+
+
 
     private Member convertDTOtoEntity(MemberDTO memberDTO){
         Member member = new Member();

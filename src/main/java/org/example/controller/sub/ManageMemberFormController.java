@@ -11,6 +11,8 @@ import org.example.repo.custom.MemberRepo;
 import org.example.repo.util.RepoFactory;
 import org.example.repo.util.RepoTypes;
 import org.example.service.custom.impl.MemberServiceIMPL;
+import org.example.service.util.ServiceFactory;
+import org.example.service.util.ServiceType;
 import org.example.tableModels.MemberTM;
 import org.example.util.exceptions.custom.MemberException;
 
@@ -31,8 +33,9 @@ public class ManageMemberFormController {
     public TableColumn<MemberTM,String> colMemberEmail;
     public TableColumn<MemberTM,String> colMemberContact;
 
-    MemberRepo repo = RepoFactory.getInstance().getRepo(RepoTypes.MEMBER_REPO);
-    private final MemberServiceIMPL service = new MemberServiceIMPL(repo);
+
+    private final MemberServiceIMPL service = (MemberServiceIMPL) ServiceFactory.getInstance()
+            .getService(ServiceType.MEMBER_SERVICE);
 
     public void initialize(){
         loadTableData();
@@ -72,7 +75,7 @@ public class ManageMemberFormController {
     public void btnSaveOnAction(ActionEvent actionEvent) {
         MemberDTO memberDTO = collectData();
         boolean isMemberSaved = false;
-        String errorMessage = "Unexpected Error Please Contact Developer";
+        String errorMessage = "Unexpected Error - Contact Developer";
         try {
             isMemberSaved = service.add(memberDTO);
 
