@@ -20,18 +20,18 @@ public class AuthorRepoIMPL implements AuthorRepo {
     @Override
     public boolean update(Author author) throws SQLException, ClassNotFoundException {
         String sql = "UPDATE Author SET name=?,contact=? WHERE id=?";
-        return CrudUtil.execute(sql, author.getName(), author.getContact(),author.getId());
+        return CrudUtil.execute(sql,author.getName(),author.getContact(),author.getId());
     }
 
     @Override
     public Optional<Author> search(Integer s) throws SQLException, ClassNotFoundException {
-        String sql = "SELECT * FROM Author WHERE id=?";
-        ResultSet rs = CrudUtil.execute(sql,s);
-        if (rs.next()) {
+        String sql = "SELECT * FROM Author WHERE id= ?" ;
+        ResultSet execute = CrudUtil.execute(sql,s);
+        if (execute.next()) {
             Author author = new Author();
-            author.setId(rs.getInt(1));
-            author.setName(rs.getString(2));
-            author.setContact(rs.getString(3));
+            author.setId(execute.getInt(1));
+            author.setName(execute.getString(2));
+            author.setContact(execute.getString(3));
             return Optional.of(author);
         }
         return Optional.empty();
@@ -46,13 +46,13 @@ public class AuthorRepoIMPL implements AuthorRepo {
     @Override
     public List<Author> getAll() throws SQLException, ClassNotFoundException {
         String sql = "SELECT * FROM Author";
-        ResultSet rs = CrudUtil.execute(sql);
+        ResultSet execute = CrudUtil.execute(sql);
         List<Author> authors = new ArrayList<>();
-        while (rs.next()){
+        while (execute.next()){
             Author author = new Author();
-            author.setId(rs.getInt(1));
-            author.setName(rs.getString(2));
-            author.setContact(rs.getString(3));
+            author.setId(execute.getInt(1));
+            author.setName(execute.getString(2));
+            author.setContact(execute.getString(3));
             authors.add(author);
         }
         return authors;

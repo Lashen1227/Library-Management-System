@@ -3,7 +3,6 @@ package org.example.service.custom.impl;
 import org.example.dto.custom.MemberDTO;
 import org.example.entity.custom.Member;
 import org.example.repo.custom.MemberRepo;
-import org.example.repo.custom.impl.MemberRepoIMPL;
 import org.example.service.custom.MemberService;
 import org.example.util.exceptions.custom.MemberException;
 
@@ -13,7 +12,12 @@ import java.util.List;
 import java.util.Optional;
 
 public class MemberServiceIMPL implements MemberService {
-    private final MemberRepo memberRepo = new MemberRepoIMPL();
+    private final MemberRepo memberRepo;
+
+    public MemberServiceIMPL(MemberRepo memberRepo) {
+        this.memberRepo = memberRepo;
+
+    }
 
     @Override
     public boolean add(MemberDTO member) throws MemberException {
@@ -119,4 +123,5 @@ public class MemberServiceIMPL implements MemberService {
         memberDTO.setContact(memberEntity.getContact());
         return memberDTO;
     }
+
 }

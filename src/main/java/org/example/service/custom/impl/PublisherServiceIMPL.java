@@ -16,7 +16,11 @@ import java.util.Optional;
 
 public class PublisherServiceIMPL implements PublisherService {
 
-    private PublisherRepo repo = new PublisherRepoIMPL();
+    private PublisherRepo repo;
+
+    public PublisherServiceIMPL(PublisherRepo repo) {
+        this.repo = repo;
+    }
 
     @Override
     public boolean add(PublisherDTO publisherDTO) throws PublisherException {
@@ -48,6 +52,7 @@ public class PublisherServiceIMPL implements PublisherService {
             }
             throw new PublisherException("Error Occurred Please Contact Developer",e);
         }
+
     }
 
     @Override
@@ -70,6 +75,7 @@ public class PublisherServiceIMPL implements PublisherService {
         } catch (SQLException | ClassNotFoundException e) {
             throw new PublisherException("Please Contact Developer",e);
         }
+
     }
 
     @Override

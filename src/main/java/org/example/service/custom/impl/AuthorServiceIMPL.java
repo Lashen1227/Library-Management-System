@@ -3,9 +3,8 @@ package org.example.service.custom.impl;
 import org.example.dto.custom.AuthorDTO;
 import org.example.entity.custom.Author;
 import org.example.repo.custom.AuthorRepo;
-import org.example.repo.custom.impl.AuthorRepoIMPL;
 import org.example.service.custom.AuthorService;
-import org.example.util.exceptions.ServiceException;
+import org.example.util.exceptions.custom.AuthorException;
 import org.example.util.exceptions.custom.BookException;
 import org.example.util.exceptions.custom.AuthorException;
 
@@ -16,7 +15,11 @@ import java.util.Optional;
 
 public class AuthorServiceIMPL implements AuthorService {
 
-    private AuthorRepo repo = new AuthorRepoIMPL();
+    private AuthorRepo repo;
+
+    public AuthorServiceIMPL(AuthorRepo repo) {
+        this.repo = repo;
+    }
 
     @Override
     public boolean add(AuthorDTO authorDTO) throws AuthorException {
@@ -48,6 +51,7 @@ public class AuthorServiceIMPL implements AuthorService {
             }
             throw new AuthorException("Error Occurred Please Contact Developer",e);
         }
+
     }
 
     @Override
@@ -70,6 +74,7 @@ public class AuthorServiceIMPL implements AuthorService {
         } catch (SQLException | ClassNotFoundException e) {
             throw new AuthorException("Please Contact Developer",e);
         }
+
     }
 
     @Override

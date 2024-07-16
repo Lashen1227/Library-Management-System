@@ -6,6 +6,10 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.example.dto.custom.MemberDTO;
+import org.example.repo.custom.BookRepo;
+import org.example.repo.custom.MemberRepo;
+import org.example.repo.util.RepoFactory;
+import org.example.repo.util.RepoTypes;
 import org.example.service.custom.impl.MemberServiceIMPL;
 import org.example.tableModels.MemberTM;
 import org.example.util.exceptions.custom.MemberException;
@@ -27,12 +31,13 @@ public class ManageMemberFormController {
     public TableColumn<MemberTM,String> colMemberEmail;
     public TableColumn<MemberTM,String> colMemberContact;
 
-    private final MemberServiceIMPL service = new MemberServiceIMPL();
+    MemberRepo repo = RepoFactory.getInstance().getRepo(RepoTypes.MEMBER_REPO);
+    private final MemberServiceIMPL service = new MemberServiceIMPL(repo);
 
-    // Initialize Method
     public void initialize(){
         loadTableData();
         visualizeTable();
+
     }
 
     private void visualizeTable() {
@@ -64,7 +69,6 @@ public class ManageMemberFormController {
     public void txtMemberContactOnAction(ActionEvent actionEvent) {
     }
 
-    // Save Button On Action
     public void btnSaveOnAction(ActionEvent actionEvent) {
         MemberDTO memberDTO = collectData();
         boolean isMemberSaved = false;
@@ -84,7 +88,6 @@ public class ManageMemberFormController {
         }
     }
 
-    // Update Button On Action
     public void btnUpdateOnAction(ActionEvent actionEvent) {
         MemberDTO memberDTO = collectData();
         boolean isUpdated = false;
@@ -103,7 +106,6 @@ public class ManageMemberFormController {
         }
     }
 
-    // Delete Button On Action
     public void btnDeleteOnAction(ActionEvent actionEvent) {
         String memberId = txtMemberId.getText();
         boolean delete = false;
@@ -116,20 +118,22 @@ public class ManageMemberFormController {
                 try {
                     delete = service.delete(memberId);
                     if (!delete){
-                        errorMessage = "User Not Found -Please Check ID";
+                        errorMessage = "User Not Found - Check ID";
                     }
                 } catch (MemberException e) {
                     errorMessage = e.getMessage();
                 }
+
             }
         }
+
         if (delete){
             new Alert(Alert.AlertType.INFORMATION,"Member Deleted Successfully").show();
-            clearFields();
             loadTableData();
         }else {
             new Alert(Alert.AlertType.ERROR,errorMessage).show();
         }
+
     }
 
     public void loadTableData(){
@@ -186,4 +190,5 @@ public class ManageMemberFormController {
         memberTM.setContact(memberDTO.getContact());
         return memberTM;
     }
+
 }
