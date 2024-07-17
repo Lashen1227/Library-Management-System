@@ -11,22 +11,28 @@ import java.util.List;
 import java.util.Optional;
 
 public class AuthorRepoIMPL implements AuthorRepo {
+
+    public AuthorRepoIMPL(){
+    }
+
     @Override
     public boolean save(Author author) throws SQLException, ClassNotFoundException {
         String sql = "INSERT INTO Author(name,contact) VALUES (?,?)";
-        return CrudUtil.execute(sql,author.getName(),author.getContact());
+        boolean execute = CrudUtil.execute(sql, author.getName(), author.getContact());
+        return execute;
     }
 
     @Override
     public boolean update(Author author) throws SQLException, ClassNotFoundException {
-        String sql = "UPDATE Author SET name=?,contact=? WHERE id=?";
-        return CrudUtil.execute(sql,author.getName(),author.getContact(),author.getId());
+        String sql = "UPDATE Author SET name=? , contact = ?  WHERE id=?";
+        boolean execute = CrudUtil.execute(sql, author.getName(),author.getContact(), author.getId());
+        return execute;
     }
 
     @Override
-    public Optional<Author> search(Integer s) throws SQLException, ClassNotFoundException {
-        String sql = "SELECT * FROM Author WHERE id= ?" ;
-        ResultSet execute = CrudUtil.execute(sql,s);
+    public Optional<Author> search(Integer id) throws SQLException, ClassNotFoundException {
+        String sql = "SELECT * FROM Author WHERE id=?";
+        ResultSet execute = CrudUtil.execute(sql,id);
         if (execute.next()) {
             Author author = new Author();
             author.setId(execute.getInt(1));
@@ -38,21 +44,21 @@ public class AuthorRepoIMPL implements AuthorRepo {
     }
 
     @Override
-    public boolean delete(Integer i) throws SQLException, ClassNotFoundException {
+    public boolean delete(Integer integer) throws SQLException, ClassNotFoundException {
         String sql = "DELETE FROM Author WHERE id=?";
-        return CrudUtil.execute(sql,i);
+        return CrudUtil.execute(sql, integer);
     }
 
     @Override
     public List<Author> getAll() throws SQLException, ClassNotFoundException {
         String sql = "SELECT * FROM Author";
-        ResultSet execute = CrudUtil.execute(sql);
+        ResultSet rs = CrudUtil.execute(sql);
         List<Author> authors = new ArrayList<>();
-        while (execute.next()){
+        while (rs.next()){
             Author author = new Author();
-            author.setId(execute.getInt(1));
-            author.setName(execute.getString(2));
-            author.setContact(execute.getString(3));
+            author.setId(rs.getInt(1));
+            author.setName(rs.getString(2));
+            author.setContact(rs.getString(3));
             authors.add(author);
         }
         return authors;

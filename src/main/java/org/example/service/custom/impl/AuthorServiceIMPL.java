@@ -3,102 +3,110 @@ package org.example.service.custom.impl;
 import org.example.dto.custom.AuthorDTO;
 import org.example.entity.custom.Author;
 import org.example.repo.custom.AuthorRepo;
+import org.example.repo.custom.impl.AuthorRepoIMPL;
 import org.example.service.custom.AuthorService;
-import org.example.util.exceptions.custom.AuthorException;
+import org.example.util.exceptions.ServiceException;
+import org.example.util.exceptions.custom.AuthorExceptions;
+import org.example.util.exceptions.custom.BookException;
+import org.example.util.exceptions.custom.MemberException;
 import org.modelmapper.ModelMapper;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Stream;
 
 public class AuthorServiceIMPL implements AuthorService {
+    //property injection - not a recommended
+    final AuthorRepo authorRepo;
+    final ModelMapper mapper;
 
-    private final AuthorRepo repo;
-    private final ModelMapper mapper;
-
-    public AuthorServiceIMPL(ModelMapper mapper,AuthorRepo repo) {
-        this.repo = repo;
+    //constructor through injection - recommended
+    public AuthorServiceIMPL(ModelMapper mapper,AuthorRepo authorRepo){
+        this.authorRepo = authorRepo;
         this.mapper = mapper;
     }
+    //setter method injection - normally recommended
+    /*public void setAuthorRepo(AuthorRepo authorRepo){
+        this.authorRepo = authorRepo;
+    }*/
 
     @Override
-    public boolean add(AuthorDTO authorDTO) throws AuthorException {
+    public boolean add(AuthorDTO authorDTO) throws AuthorExceptions {
         Author author = convertToEntity(authorDTO);
         try {
-            return repo.save(author);
+            return authorRepo.save(author);
         } catch (SQLException | ClassNotFoundException e) {
             if (((SQLException) e).getErrorCode() == 1062) {
-                throw new AuthorException("ID Already Exists - Cannot Save.");
+                throw new AuthorExceptions("ID Already Exists - Cannot Save.");
             } else if (((SQLException) e).getErrorCode() == 1406) {
                 String message = ((SQLException) e).getMessage();
                 String[] s = message.split("'");
-                throw new AuthorException("Data is To Large For "+s[1]);
+                throw new AuthorExceptions("Data is To Large For "+s[1]);
             }
-            throw new AuthorException("Error Occurred Please Contact Developer",e);
+            throw new AuthorExceptions("Error Occurred Please Contact Developer",e);
         }
     }
 
     @Override
-    public boolean update(AuthorDTO authorDTO) throws AuthorException {
+    public boolean update(AuthorDTO authorDTO) throws AuthorExceptions {
         Author author = convertToEntity(authorDTO);
         try {
-            return repo.update(author);
+            return authorRepo.update(author);
         } catch (SQLException | ClassNotFoundException e) {
             if (((SQLException) e).getErrorCode() == 1406) {
                 String message = ((SQLException) e).getMessage();
                 String[] s = message.split("'");
-                throw new AuthorException("Data is To Large For "+s[1]);
+                throw new AuthorExceptions("Data is To Large For "+s[1]);
             }
-            throw new AuthorException("Error Occurred Please Contact Developer",e);
+            throw new AuthorExceptions("Error Occurred Please Contact Developer",e);
+        }
+    }
+
+    @Override
+    public boolean delete(Integer integer) throws AuthorExceptions {
+        try {
+            return authorRepo.delete(integer);
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            throw new AuthorExceptions("Error Occurred Please Contact Developer", e);
         }
 
     }
 
     @Override
-    public boolean delete(Integer integer) throws AuthorException {
+    public Optional<AuthorDTO> search(Integer integer) throws AuthorExceptions {
         try {
-            return repo.delete(integer);
+            Optional<Author> search = authorRepo.search(integer);
+            if (search.isPresent()){
+                Author author = search.get();
+                AuthorDTO authorDTO = convertToDto(author);
+                return Optional.of(authorDTO);
+            }
         } catch (SQLException | ClassNotFoundException e) {
-            throw new AuthorException("Not Implemented Yet");
+            throw new AuthorExceptions("Please Contact Developer",e);
         }
+        return Optional.empty();
     }
 
     @Override
-    public Optional<AuthorDTO> search(Integer integer) throws AuthorException {
+    public List<AuthorDTO> getAll() throws AuthorExceptions {
         try {
-            Optional<Author> search = repo.search(integer);
-            if (search.isPresent()) {
-                return Optional.of(convertToDTO(search.get()));
-            }
-            return Optional.empty();
+            List<Author> all = authorRepo.getAll();
+            return all.stream().map(this::convertToDto).toList();
         } catch (SQLException | ClassNotFoundException e) {
-            throw new AuthorException("Please Contact Developer",e);
-        }
-
-    }
-
-    @Override
-    public List<AuthorDTO> getAll() throws AuthorException {
-        try {
-            List<Author> all = repo.getAll();
-            //return all.stream().map(this::convertToDTO).toList();
-            ArrayList<AuthorDTO> authorDTOS = new ArrayList<>();
-            for (Author author : all) {
-                AuthorDTO authorDTO = convertToDTO(author);
-                authorDTOS.add(authorDTO);
-            }
-            return authorDTOS;
-        } catch (SQLException | ClassNotFoundException e) {
-            throw new AuthorException("Please Contact Developer",e);
+            throw new AuthorExceptions("Please Contact Developer",e);
         }
     }
 
-    private AuthorDTO convertToDTO(Author author){
-        return mapper.map(author,AuthorDTO.class);
+    public Author convertToEntity(AuthorDTO authorDTO) {
+        return this.mapper.map(authorDTO, Author.class);
     }
 
-    private Author convertToEntity(AuthorDTO authorDTO){
-        return mapper.map(authorDTO,Author.class);
+    private AuthorDTO  convertToDto(Author author){
+        return this.mapper.map(author,AuthorDTO.class);
     }
+
 }
