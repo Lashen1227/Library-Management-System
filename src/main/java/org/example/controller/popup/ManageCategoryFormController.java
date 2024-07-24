@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import org.example.controller.sub.ManageBookFormController;
 import org.example.dto.custom.CategoryDTO;
 import org.example.service.custom.CategoryService;
 import org.example.service.util.OtherDependancies;
@@ -22,6 +23,7 @@ public class ManageCategoryFormController {
     public TableView<CategoryTM> tblCategories;
     public TableColumn<CategoryTM,Integer> colCategoryId;
     public TableColumn<CategoryTM,String> colCategoryName;
+    private ManageBookFormController baseController;
 
     CategoryService service = (CategoryService) ServiceFactory.getInstance().getService(ServiceType.CATEGORY_SERVICE);
     ModelMapper mapper = OtherDependancies.getInstance().getMapper();
@@ -39,6 +41,7 @@ public class ManageCategoryFormController {
         try {
             List<CategoryTM> list = service.getAll().stream().map(e -> mapper.map(e, CategoryTM.class)).toList();
             tblCategories.setItems(FXCollections.observableArrayList(list));
+            if (baseController!=null)baseController.loadCategoryData();
         } catch (ServiceException e) {
             e.printStackTrace();
         }
@@ -104,8 +107,6 @@ public class ManageCategoryFormController {
                 }
             }
         }
-
-
     }
 
     public void btnClearOnAction(ActionEvent actionEvent) {
@@ -140,5 +141,9 @@ public class ManageCategoryFormController {
         } catch (ServiceException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
+    }
+
+    public void setBaseController(ManageBookFormController baseController){
+        this.baseController = baseController;
     }
 }
