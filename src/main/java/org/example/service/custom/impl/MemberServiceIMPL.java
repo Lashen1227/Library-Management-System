@@ -25,10 +25,9 @@ public class MemberServiceIMPL implements MemberService {
     public boolean add(MemberDTO member) throws MemberException {
         Member entity = this.convertDTOtoEntity(member);
         try {
-            boolean isSaved = memberRepo.save(entity);
+            boolean isSaved = memberRepo.save(entity)==null;
             return isSaved;
         } catch (SQLException | ClassNotFoundException e) {
-
             if (e instanceof SQLException) {
                 System.out.println("Error Code : "+((SQLException) e).getErrorCode());
                 if (((SQLException) e).getErrorCode() == 1062) {
@@ -40,9 +39,10 @@ public class MemberServiceIMPL implements MemberService {
                 }
             }
             e.printStackTrace();
-            throw new MemberException("Error Occurred Please Contact Developer",e);
+            throw new MemberException("Error Occured Please Contact Developer",e);
         }
     }
+
 
     @Override
     public boolean delete(String id) throws MemberException{
@@ -51,7 +51,7 @@ public class MemberServiceIMPL implements MemberService {
             return delete;
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
-            throw new MemberException("Error Occurred Please Contact Developer", e);
+            throw new MemberException("Error Occured Please Contact Developer", e);
         }
     }
 
@@ -69,7 +69,7 @@ public class MemberServiceIMPL implements MemberService {
                     throw new MemberException("Data is To Large For "+s[1]);
                 }
             }
-            throw new MemberException("Error Occurred Please Contact Developer",e);
+            throw new MemberException("Error Occured Please Contact Developer",e);
         }
     }
 
@@ -82,7 +82,7 @@ public class MemberServiceIMPL implements MemberService {
                 return Optional.of(memberDTO);
             }
         } catch (SQLException | ClassNotFoundException e) {
-            throw new MemberException("Please Contact Developer",e);
+            throw new MemberException("Error Occured Please Contact Developer",e);
         }
         return Optional.empty();
     }
@@ -101,7 +101,7 @@ public class MemberServiceIMPL implements MemberService {
             }
             return memberDTOS;
         } catch (SQLException | ClassNotFoundException e) {
-            throw new MemberException("Please Contact Developer",e);
+            throw new MemberException("Error Occured Please Contact Developer",e);
         }
     }
 

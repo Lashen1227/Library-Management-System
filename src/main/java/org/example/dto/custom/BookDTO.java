@@ -1,21 +1,22 @@
 package org.example.dto.custom;
 
 import org.example.dto.SuperDTO;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
+import java.util.List;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class BookDTO implements SuperDTO {
     private int id;
     private String name;
     private String isbn;
     private double price;
-    private String author;
     private int publisherId;
     private int mainCategoryId;
+    private List<Integer> subCategoryIds;
+    private List<Integer> authors;
 }

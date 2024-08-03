@@ -16,10 +16,10 @@ public class AuthorRepoIMPL implements AuthorRepo {
     }
 
     @Override
-    public boolean save(Author author) throws SQLException, ClassNotFoundException {
+    public Author save(Author author) throws SQLException, ClassNotFoundException {
         String sql = "INSERT INTO Author(name,contact) VALUES (?,?)";
         boolean execute = CrudUtil.execute(sql, author.getName(), author.getContact());
-        return execute;
+        return author;
     }
 
     @Override

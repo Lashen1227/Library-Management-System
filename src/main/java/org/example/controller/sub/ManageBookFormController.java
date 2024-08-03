@@ -13,6 +13,7 @@ import javafx.util.StringConverter;
 import org.example.cm.CategoryCM;
 import org.example.cm.PublisherCM;
 import org.example.controller.popup.ManageCategoryFormController;
+import org.example.dto.custom.BookDTO;
 import org.example.service.custom.AuthorService;
 import org.example.service.custom.BookService;
 import org.example.service.custom.CategoryService;
@@ -54,7 +55,7 @@ public class ManageBookFormController {
             .getService(ServiceType.CATEGORY_SERVICE);
     private final AuthorService authorService = (AuthorService) ServiceFactory.getInstance()
             .getService(ServiceType.AUTHOR_SERVICE);
-    private final BookService service = (BookService) ServiceFactory.getInstance()
+    private final BookService bookService = (BookService) ServiceFactory.getInstance()
             .getService(ServiceType.BOOK_SERVICE);
 
     public void initialize(){
@@ -127,6 +128,14 @@ public class ManageBookFormController {
 
     public void btnSaveOnAction(ActionEvent actionEvent) {
         //Find Selected Data in Author Table and Category Table
+        BookDTO bookDTO = collectData();
+        try {
+            bookService.add(bookDTO);
+        } catch (ServiceException e) {
+            throw new RuntimeException(e);
+        }
+
+
     }
 
     public void btnUpdateOnAction(ActionEvent actionEvent) {
@@ -154,4 +163,45 @@ public class ManageBookFormController {
             e.printStackTrace();
         }
     }
+
+    public BookDTO collectData(){
+        int bookId = 0;
+        String bookName = txtBookName.getText();
+        String isbnNumber = txtBookIsbn.getText();
+        double price = 0;
+        int publisherId = 0;
+        int mainCategoryId = 0;
+        int count=0;
+        try {
+            bookId = Integer.parseInt(txtBookId.getText());
+        }catch (NumberFormatException e){}
+        try {
+            price = Double.parseDouble(txtPrice.getText());
+        }catch (NumberFormatException e){
+            new Alert(Alert.AlertType.ERROR,"Enter valid Price").show();
+            return null;
+        }
+        try {
+            publisherId= cmbPublisher.getSelectionModel().getSelectedItem().getId();
+            count++;
+            mainCategoryId= cmbMainCategory.getSelectionModel().getSelectedItem().getId();
+        }catch (NullPointerException ex){
+            String er = count== 0 ?  "Publisher" : "Category";
+            new Alert(Alert.AlertType.ERROR , "Select "+er ).show();
+        }
+        /*ArrayList<Integer> authorIds = new ArrayList<>();
+        ObservableList<AuthorTMWithCheckBox> items = tblAuthors.getItems();
+        for (AuthorTMWithCheckBox item : items) {
+            if (item.getCheckBox().isSelected()){
+                authorIds.add(item.getId());
+            }
+        }*/
+
+        List<Integer> authorIds = tblAuthors.getItems().stream().filter(e -> e.getCheckBox().isSelected()).map(e -> e.getId()).toList();
+        List<Integer> subCategoryIds = tblSubCategories.getItems().stream().filter(e -> e.getCheckBox().isSelected()).map(e -> e.getId()).toList();
+        return BookDTO.builder().id(bookId).name(bookName).isbn(isbnNumber).price(price)
+                .publisherId(publisherId).mainCategoryId(mainCategoryId).authors(authorIds)
+                .subCategoryIds(subCategoryIds).build();
+    }
+
 }

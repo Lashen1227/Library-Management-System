@@ -3,24 +3,42 @@ package org.example.repo.custom.impl;
 import org.example.entity.custom.Book;
 import org.example.repo.custom.BookRepo;
 import org.example.util.CrudUtil;
+import org.example.util.DBConnection;
 
+
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class BookRepoIMPL implements BookRepo {
     @Override
-    public boolean save(Book book) throws SQLException, ClassNotFoundException {
-        String sql = "INSERT INTO book(id,name,isbn,price,publisher_id,main_category_id)" + " VALUES (?,?,?,?,?,?)";
-        boolean execute = CrudUtil.execute(sql, book.getId(), book.getName(), book.getIsbn(), book.getPrice(), book.getPublisherId(), book.getMainCategoryId());
-        return execute;
+    public Book save(Book book) throws SQLException, ClassNotFoundException {
+        String sql = "INSERT INTO book(id,name,isbn,price,publisher_id,main_category_id)" +
+                " VALUES (?,?,?,?,?,?)";
+        //boolean execute = CrudUtil.execute(sql, book.getId(), book.getName(), book.getIsbn(), book.getPrice(), book.getPublisherId(), book.getMainCategoryId());
+        PreparedStatement ps = DBConnection.getInstance().getConnection().prepareStatement(sql,PreparedStatement.RETURN_GENERATED_KEYS);
+        ps.setInt(1,book.getId());
+        ps.setString(2,book.getName());
+        ps.setString(3,book.getIsbn());
+        ps.setDouble(4,book.getPrice());
+        ps.setInt(5,book.getPublisherId());
+        ps.setInt(6,book.getMainCategoryId());
+        int affectedRows = ps.executeUpdate();
+        ResultSet generatedKeys = ps.getGeneratedKeys();
+        if (generatedKeys.next()){
+            book.setId(generatedKeys.getInt(1));
+        }
+        return book;
     }
 
     @Override
     public boolean update(Book book) throws SQLException, ClassNotFoundException {
-        String sql = "UPDATE book set name = ? , isbn = ? , price = ? , publisher_id = ? , " + "main_category_id = ? where id = ?";
+        String sql = "UPDATE book set name = ? , isbn = ? , price = ? , publisher_id = ? , " +
+                "main_category_id = ? where id = ?";
         boolean execute = CrudUtil.execute(sql, book.getName(), book.getIsbn(), book.getPrice(), book.getPublisherId(), book.getMainCategoryId(), book.getId());
         return execute;
     }

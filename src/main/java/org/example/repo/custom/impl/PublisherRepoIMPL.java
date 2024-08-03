@@ -12,9 +12,10 @@ import java.util.Optional;
 
 public class PublisherRepoIMPL implements PublisherRepo {
     @Override
-    public boolean save(Publisher publisher) throws SQLException, ClassNotFoundException {
+    public Publisher save(Publisher publisher) throws SQLException, ClassNotFoundException {
         String sql = "INSERT INTO Publisher(name,location,contact) VALUES (?,?,?)";
-        return CrudUtil.execute(sql,publisher.getName(),publisher.getLocation(),publisher.getContact());
+        CrudUtil.execute(sql,publisher.getName(),publisher.getLocation(),publisher.getContact());
+        return publisher;
     }
 
     @Override

@@ -15,7 +15,7 @@ import java.util.Optional;
 public class MemberRepoIMPL implements MemberRepo {
 
     @Override
-    public boolean save(Member member) throws SQLException, ClassNotFoundException {
+    public Member save(Member member) throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.getInstance().getConnection();
         PreparedStatement ps = connection.prepareStatement("INSERT INTO member(id,name,address,email,contact) VALUES(?,?,?,?,?)");
         ps.setString(1, member.getId());
@@ -24,9 +24,8 @@ public class MemberRepoIMPL implements MemberRepo {
         ps.setString(4, member.getEmail());
         ps.setString(5, member.getContact());
         int affectedRows = ps.executeUpdate();
-        return affectedRows> 0;
+        return member;
     }
-
     @Override
     public boolean delete(String id) throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.getInstance().getConnection();

@@ -29,7 +29,7 @@ public class PublisherServiceIMPL implements PublisherService {
     public boolean add(PublisherDTO publisherDTO) throws PublisherException {
         Publisher publisher = convertToEntity(publisherDTO);
         try {
-            return repo.save(publisher);
+            return repo.save(publisher)==null;
         } catch (SQLException | ClassNotFoundException e) {
             if (((SQLException) e).getErrorCode() == 1062) {
                 throw new PublisherException("ID Already Exists - Cannot Save.");
@@ -38,7 +38,7 @@ public class PublisherServiceIMPL implements PublisherService {
                 String[] s = message.split("'");
                 throw new PublisherException("Data is To Large For "+s[1]);
             }
-            throw new PublisherException("Error Occurred Please Contact Developer",e);
+            throw new PublisherException("Error Occured Please Contact Developer",e);
         }
     }
 
@@ -53,9 +53,8 @@ public class PublisherServiceIMPL implements PublisherService {
                 String[] s = message.split("'");
                 throw new PublisherException("Data is To Large For "+s[1]);
             }
-            throw new PublisherException("Error Occurred Please Contact Developer",e);
+            throw new PublisherException("Error Occured Please Contact Developer",e);
         }
-
     }
 
     @Override
@@ -78,7 +77,6 @@ public class PublisherServiceIMPL implements PublisherService {
         } catch (SQLException | ClassNotFoundException e) {
             throw new PublisherException("Please Contact Developer",e);
         }
-
     }
 
     @Override
@@ -104,4 +102,5 @@ public class PublisherServiceIMPL implements PublisherService {
     private Publisher convertToEntity(PublisherDTO publisherDTO){
         return mapper.map(publisherDTO,Publisher.class);
     }
+
 }

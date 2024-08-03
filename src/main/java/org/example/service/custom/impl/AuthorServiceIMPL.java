@@ -37,7 +37,7 @@ public class AuthorServiceIMPL implements AuthorService {
     public boolean add(AuthorDTO authorDTO) throws AuthorExceptions {
         Author author = convertToEntity(authorDTO);
         try {
-            return authorRepo.save(author);
+            return authorRepo.save(author)==null;
         } catch (SQLException | ClassNotFoundException e) {
             if (((SQLException) e).getErrorCode() == 1062) {
                 throw new AuthorExceptions("ID Already Exists - Cannot Save.");
@@ -73,7 +73,6 @@ public class AuthorServiceIMPL implements AuthorService {
             e.printStackTrace();
             throw new AuthorExceptions("Error Occurred Please Contact Developer", e);
         }
-
     }
 
     @Override

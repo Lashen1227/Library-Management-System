@@ -2,9 +2,14 @@ package org.example.service.custom.impl;
 
 import org.example.dto.custom.BookDTO;
 import org.example.entity.custom.Book;
+import org.example.entity.custom.BookAuthor;
+import org.example.entity.custom.SubCategories;
+import org.example.repo.custom.BookAuthorRepo;
 import org.example.repo.custom.BookRepo;
+import org.example.repo.custom.SubCategoriesRepo;
 import org.example.repo.custom.impl.BookRepoIMPL;
 import org.example.service.custom.BookService;
+import org.example.util.DBConnection;
 import org.example.util.exceptions.custom.BookException;
 import org.modelmapper.ModelMapper;
 
@@ -16,18 +21,43 @@ import java.util.Optional;
 public class BookServiceIMPL implements BookService {
     private final ModelMapper mapper;
     private final BookRepo repo;
+    private final BookAuthorRepo bookAuthorRepo;
+    private final SubCategoriesRepo subCategoriesRepo;
 
-    public BookServiceIMPL(ModelMapper mapper, BookRepo repo) {
+    public BookServiceIMPL(ModelMapper mapper, BookRepo repo, BookAuthorRepo bookAuthorRepo, SubCategoriesRepo subCategoriesRepo) {
         this.mapper = mapper;
         this.repo = repo;
+        this.bookAuthorRepo = bookAuthorRepo;
+        this.subCategoriesRepo = subCategoriesRepo;
     }
 
     @Override
     public boolean add(BookDTO bookDTO) throws BookException {
         Book book = this.convertDtoToEntity(bookDTO);
         try {
-            return repo.save(book);
+            DBConnection.getInstance().getConnection().setAutoCommit(false);
+
+            Book save = repo.save(book);
+            List<BookAuthor> authorList = bookDTO.getAuthors().stream().map(e -> new BookAuthor(save.getId(), e)).toList();
+            List<SubCategories> subCategoryList = bookDTO.getSubCategoryIds().stream().map(e -> new SubCategories(save.getId(), e)).toList();
+
+            boolean flag = bookAuthorRepo.saveList(authorList);
+            if (flag){
+                flag = subCategoriesRepo.saveList(subCategoryList);
+                if (flag){
+                    DBConnection.getInstance().getConnection().commit();
+                    return true;
+                }
+            }
+            DBConnection.getInstance().getConnection().rollback();
+            return false;
+
         } catch (SQLException | ClassNotFoundException e) {
+            try {
+                DBConnection.getInstance().getConnection().rollback();
+            } catch (SQLException | ClassNotFoundException ex) {
+
+            }
             if (((SQLException) e).getErrorCode() == 1062) {
                 throw new BookException("ID Already Exists - Cannot Save.");
             } else if (((SQLException) e).getErrorCode() == 1406) {
@@ -36,6 +66,12 @@ public class BookServiceIMPL implements BookService {
                 throw new BookException("Data is To Large For "+s[1]);
             }
             throw new BookException("Error Occurred Please Contact Developer",e);
+        }finally {
+            try {
+                DBConnection.getInstance().getConnection().setAutoCommit(true);
+            } catch (SQLException | ClassNotFoundException e) {
+
+            }
         }
     }
 
@@ -60,7 +96,7 @@ public class BookServiceIMPL implements BookService {
         try {
             return repo.delete(integer);
         } catch (SQLException | ClassNotFoundException e) {
-            throw new BookException("Not Fully Implemented",e);
+            throw new BookException("Not Fully Implemented Yet",e);
         }
     }
 

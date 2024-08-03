@@ -26,7 +26,7 @@ public class CategoryServiceIMPL implements CategoryService {
     public boolean add(CategoryDTO categoryDTO) throws CategoryException {
         Category category = convertToEntity(categoryDTO);
         try {
-            return categoryRepo.save(category);
+            return categoryRepo.save(category) ==null;
         } catch (SQLException | ClassNotFoundException e) {
             if (e instanceof SQLException) {
                 System.out.println("Error Code : "+((SQLException) e).getErrorCode());

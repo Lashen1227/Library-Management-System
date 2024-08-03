@@ -12,9 +12,10 @@ import java.util.Optional;
 
 public class CategoryRepoIMPL implements CategoryRepo {
     @Override
-    public boolean save(Category category) throws SQLException, ClassNotFoundException {
+    public Category save(Category category) throws SQLException, ClassNotFoundException {
         String sql = "INSERT INTO Category(name) VALUES (?)";
-        return CrudUtil.execute(sql, category.getName());
+        CrudUtil.execute(sql, category.getName());
+        return category;
     }
 
     @Override
