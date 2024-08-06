@@ -14,9 +14,8 @@ import org.example.util.exceptions.custom.BookException;
 import org.modelmapper.ModelMapper;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class BookServiceIMPL implements BookService {
     private final ModelMapper mapper;
@@ -65,7 +64,7 @@ public class BookServiceIMPL implements BookService {
                 String[] s = message.split("'");
                 throw new BookException("Data is To Large For "+s[1]);
             }
-            throw new BookException("Error Occurred Please Contact Developer",e);
+            throw new BookException("Error Occured Please Contact Developer",e);
         }finally {
             try {
                 DBConnection.getInstance().getConnection().setAutoCommit(true);
@@ -78,15 +77,46 @@ public class BookServiceIMPL implements BookService {
     @Override
     public boolean update(BookDTO bookDTO) throws BookException {
         Book book = convertDtoToEntity(bookDTO);
+        List<BookAuthor> authorList = bookDTO.getAuthors().stream().map(e -> new BookAuthor(bookDTO.getId(), e)).toList();
+        List<SubCategories> subCategoryList = bookDTO.getSubCategoryIds().stream().map(e -> new SubCategories(bookDTO.getId(), e)).toList();
         try {
-            return repo.update(book);
+            DBConnection.getInstance().getConnection().setAutoCommit(false);
+            //book table update
+            boolean update = repo.update(book);
+            if (update){
+                //bookAuthor table records clear
+                boolean isDeletedBookAuthor = bookAuthorRepo.deleteALlWithBookId(bookDTO.getId());
+                if (isDeletedBookAuthor){
+                    //subcategories table records clear
+                    boolean isAllSUbCategoriesDeleted = subCategoriesRepo.deleteAllWithBookId(bookDTO.getId());
+                    if (isAllSUbCategoriesDeleted){
+                        //bookAuthor table records add
+                        boolean isALlBookAuthorRecordsAdded = bookAuthorRepo.saveList(authorList);
+                        if (isALlBookAuthorRecordsAdded){
+                            //subcategories table records add
+                            boolean isAllSubCategoryRecordsAdded = subCategoriesRepo.saveList(subCategoryList);
+                            if (isAllSubCategoryRecordsAdded){
+                                DBConnection.getInstance().getConnection().commit();
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+            DBConnection.getInstance().getConnection().rollback();
+            return false;
         } catch (SQLException | ClassNotFoundException e) {
+            try {
+                DBConnection.getInstance().getConnection().rollback();
+            } catch (SQLException | ClassNotFoundException ex) {}
             if (((SQLException) e).getErrorCode() == 1406) {
                 String message = ((SQLException) e).getMessage();
                 String[] s = message.split("'");
                 throw new BookException("Data is To Large For "+s[1]);
             }
-            throw new BookException("Error Occurred Please Contact Developer",e);
+            throw new BookException("Error Occured Please Contact Developer",e);
+        }finally {
+            try {DBConnection.getInstance().getConnection().setAutoCommit(true);} catch (SQLException | ClassNotFoundException e) {}
         }
 
     }
@@ -96,7 +126,7 @@ public class BookServiceIMPL implements BookService {
         try {
             return repo.delete(integer);
         } catch (SQLException | ClassNotFoundException e) {
-            throw new BookException("Not Fully Implemented Yet",e);
+            throw new BookException("Not Implemented Yet Fully",e);
         }
     }
 
@@ -106,12 +136,16 @@ public class BookServiceIMPL implements BookService {
             Optional<Book> search = repo.search(integer);
             if (search.isPresent()){
                 Book book = search.get();
+                List<Integer> authors = bookAuthorRepo.getAll(integer).stream().map(e -> e.getAuthorId()).toList();
+                List<Integer> subCategoryIds = subCategoriesRepo.getAll(integer).stream().map(e -> e.getCategoryId()).toList();
                 BookDTO bookDTO = convertEntityToDto(book);
+                bookDTO.setSubCategoryIds(subCategoryIds);
+                bookDTO.setAuthors(authors);
                 return Optional.of(bookDTO);
             }
             return Optional.empty();
         } catch (SQLException | ClassNotFoundException e) {
-            throw new BookException("Please Contact Developer",e);
+            throw new BookException("Please Contact Developper",e);
         }
 
     }
@@ -127,7 +161,7 @@ public class BookServiceIMPL implements BookService {
             }
             return newList;
         } catch (SQLException | ClassNotFoundException e) {
-            throw new BookException("Please Contact Developer",e);
+            throw new BookException("Please Contact Developper",e);
         }
     }
 
